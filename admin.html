@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Management Panel for Green House Hostel. Seat availability, resident records, and registered members manager.">
+    <title>Admin Portal - Green House Hostel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0F2C22',
+                        sage: '#5E846A',
+                        gold: '#DFB15B',
+                        cream: '#FDFBF7',
+                        sand: '#F5EFE4',
+                        charcoal: '#1C2B24',
+                        offwhite: '#E2ECE9',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css?v=12">
+    <script src="theme-toggle.js"></script>
+    <script src="auth.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-sand text-charcoal font-sans antialiased selection:bg-gold selection:text-forest min-h-screen flex flex-col">
+
+    <!-- Toast Notification Banner -->
+    <div id="admin-toast" class="fixed bottom-6 right-6 z-50 hidden bg-forest text-gold px-5 py-3 rounded-2xl shadow-2xl border border-gold/40 flex items-center gap-3 text-xs font-bold fade-in">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-gold"></i>
+        <span id="toast-message">State updated successfully!</span>
+    </div>
+
+    <!-- Header / Top Bar -->
+    <header class="bg-forest text-white py-4 px-6 border-b border-gold/20 shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 w-auto">
+                <div>
+                    <h1 class="font-serif text-xl font-bold text-white leading-tight">Green House Admin Portal</h1>
+                    <p class="text-[10px] text-offwhite/60 uppercase tracking-widest">Property & Resident Management</p>
+                </div>
+            </a>
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn w-11 h-11 min-w-[44px] min-h-[44px] rounded-full text-gold bg-white/10 hover:bg-gold hover:text-forest transition-all flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+                <div id="auth-status-bar" class="hidden flex items-center gap-2 sm:gap-3">
+                    <span id="logged-in-badge" class="hidden sm:inline-flex text-xs text-gold font-mono bg-white/10 px-3 py-2 rounded-full border border-gold/30 items-center gap-1.5 min-h-[44px]">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <span id="logged-in-user">admin</span>
+                    </span>
+                    <a href="seat-plan.html" target="_blank" class="bg-white/10 text-offwhite border border-white/20 px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-forest transition-all flex items-center gap-1.5 min-h-[44px]">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Public Plan
+                    </a>
+                    <button onclick="window.GHH_AUTH.logout()" class="text-xs text-offwhite/80 hover:text-white underline min-h-[44px] px-2.5 py-2 inline-flex items-center" aria-label="Log Out">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- Login Screen (Shown when not authenticated as Admin) -->
+        <div id="login-container" class="max-w-md mx-auto my-12 bg-white p-8 rounded-3xl border border-charcoal/10 shadow-2xl">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-forest/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-forest">
+                    <i data-lucide="shield-lock" class="w-8 h-8 text-gold"></i>
+                </div>
+                <h2 class="font-serif text-2xl font-bold text-forest">Administrator Access</h2>
+                <p class="text-xs text-charcoal/60 mt-1">Sign in with the authorized Green House administrator email to manage seats and view resident rosters.</p>
+            </div>
+
+            <form id="admin-login-form" class="space-y-5">
+                <div id="login-error" class="hidden bg-rose-50 text-rose-700 text-xs p-3 rounded-xl border border-rose-200 flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                    <span id="login-error-text">Unauthorized email or invalid credentials.</span>
+                </div>
+
+                <div>
+                    <label for="admin-email-input" class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Admin Email</label>
+                    <div class="relative">
+                        <i data-lucide="mail" class="w-4 h-4 absolute left-3.5 top-3 text-charcoal/40"></i>
+                        <input type="email" id="admin-email-input" required placeholder="greenhouse5014@gmail.com" class="w-full pl-10 pr-4 py-2.5 min-h-[44px] rounded-xl border border-charcoal/20 focus:border-gold focus:ring-1 focus:ring-gold text-sm font-mono">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="admin-pass-input" class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Admin Password</label>
+                    <div class="relative">
+                        <i data-lucide="key" class="w-4 h-4 absolute left-3.5 top-3 text-charcoal/40"></i>
+                        <input type="password" id="admin-pass-input" required placeholder="Enter password" class="w-full pl-10 pr-4 py-2.5 min-h-[44px] rounded-xl border border-charcoal/20 focus:border-gold focus:ring-1 focus:ring-gold text-sm font-mono">
+                    </div>
+                </div>
+
+                <button type="submit" id="admin-submit-btn" class="w-full bg-forest text-gold font-bold py-3.5 min-h-[48px] rounded-xl uppercase tracking-wider text-xs hover:bg-gold hover:text-forest transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="log-in" class="w-4 h-4"></i> <span id="admin-btn-label">Access Admin Dashboard</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard Panel (Shown when authenticated) -->
+        <div id="admin-dashboard" class="hidden space-y-8 fade-in">
+
+            <!-- Primary Navigation Tabs (Seats vs Registered Members) -->
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-2.5 rounded-2xl border border-charcoal/10 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <button id="nav-tab-seats" onclick="switchAdminTab('seats')" class="px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-forest text-gold shadow-md flex items-center gap-2 transition-all">
+                        <i data-lucide="bed" class="w-4 h-4"></i> Seat & Resident Manager
+                    </button>
+                    <button id="nav-tab-users" onclick="switchAdminTab('users')" class="px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-sand text-charcoal hover:bg-forest/10 flex items-center gap-2 transition-all">
+                        <i data-lucide="users" class="w-4 h-4 text-forest"></i> Registered Members (<span id="tab-user-count">0</span>)
+                    </button>
+                </div>
+                <div class="text-xs text-charcoal/60 px-3 hidden md:block">
+                    Hostel 1 (Boys) • Diabari, Uttara
+                </div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TAB 1: SEAT & RESIDENT OCCUPANT MANAGER -->
+            <!-- ============================================================= -->
+            <div id="view-seats-tab" class="space-y-8">
+                
+                <!-- Inventory Stats Banner -->
+                <div class="bg-white p-6 rounded-3xl border border-charcoal/10 shadow-md">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-gold bg-forest px-3 py-1 rounded-full">Live Seat Manager</span>
+                            <h2 class="font-serif text-3xl font-bold text-forest mt-2">Seat Availability & Resident Names</h2>
+                            <p class="text-xs text-charcoal/60">Click any bed to update status or assign occupant names. Resident details are <strong class="text-forest">private to admin only</strong>.</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full md:w-auto text-center divide-y sm:divide-y-0 sm:divide-x divide-charcoal/10">
+                            <div class="px-3 pt-2 sm:pt-0">
+                                <span class="text-2xl font-bold font-mono text-forest" id="stat-total-beds">0</span>
+                                <div class="text-[10px] uppercase font-bold text-charcoal/60">Total Beds</div>
+                            </div>
+                            <div class="px-3 pt-2 sm:pt-0">
+                                <span class="text-2xl font-bold font-mono text-emerald-600" id="stat-available-beds">0</span>
+                                <div class="text-[10px] uppercase font-bold text-charcoal/60">Available</div>
+                            </div>
+                            <div class="px-3 pt-2 sm:pt-0">
+                                <span class="text-2xl font-bold font-mono text-rose-600" id="stat-booked-beds">0</span>
+                                <div class="text-[10px] uppercase font-bold text-charcoal/60">Booked</div>
+                            </div>
+                            <div class="px-3 pt-2 sm:pt-0">
+                                <span class="text-2xl font-bold font-mono text-gold" id="stat-occupancy-rate">0%</span>
+                                <div class="text-[10px] uppercase font-bold text-charcoal/60">Occupancy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Occupancy Bar -->
+                    <div class="mt-5 pt-4 border-t border-charcoal/5">
+                        <div class="flex justify-between items-center text-xs mb-1.5 font-bold">
+                            <span class="text-charcoal/70 uppercase tracking-wider text-[10px]">Hostel Total Occupancy Meter</span>
+                            <span id="stat-occupancy-label" class="text-forest">0% Booked</span>
+                        </div>
+                        <div class="w-full bg-sand rounded-full h-3 overflow-hidden border border-charcoal/10">
+                            <div id="occupancy-progress-bar" class="bg-gradient-to-r from-emerald-600 via-gold to-rose-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls: Floor Selector & Room Category Filters & Search & Batch Actions -->
+                <div class="bg-white p-5 rounded-2xl border border-charcoal/10 shadow-sm space-y-4">
+                    
+                    <!-- Top Row: Floor Selector + Search -->
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                        <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
+                            <span class="text-sm font-bold text-forest font-serif flex items-center gap-1.5 shrink-0">
+                                <i data-lucide="layers" class="w-4 h-4 text-gold"></i> Select Floor:
+                            </span>
+                            <div class="flex flex-wrap items-center gap-1.5" id="admin-floor-selector">
+                                <button data-floor="2" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-md flex items-center justify-center">2nd Floor</button>
+                                <button data-floor="3" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center">3rd Floor</button>
+                                <button data-floor="4" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center">4th Floor</button>
+                                <button data-floor="5" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center">5th Floor</button>
+                                <button data-floor="6" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center">6th Floor</button>
+                                <button data-floor="7" class="admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center">7th Floor</button>
+                            </div>
+                        </div>
+
+                        <!-- Search Input -->
+                        <div class="relative w-full lg:w-64">
+                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3.5 top-3.5 text-charcoal/40"></i>
+                            <input type="text" id="admin-room-search" placeholder="Search room or resident..." aria-label="Search rooms" class="w-full pl-9 pr-3 py-2 min-h-[40px] rounded-xl border border-charcoal/20 text-xs focus:outline-none focus:border-forest">
+                        </div>
+                    </div>
+
+                    <!-- Bottom Row: Room Filter Pills + Batch Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-charcoal/10">
+                        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto" id="admin-filter-pills">
+                            <span class="text-xs font-bold text-charcoal/60 uppercase tracking-wider mr-1">Filter:</span>
+                            <button data-filter="all" class="admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-sm">All Rooms</button>
+                            <button data-filter="1" class="admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">1-Bed Single</button>
+                            <button data-filter="2" class="admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">2-Bed Double</button>
+                            <button data-filter="3" class="admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">3-Bed Triple</button>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+                            <button id="batch-available-btn" class="px-3.5 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition-all flex items-center gap-1.5 shadow-sm">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Set Floor Available
+                            </button>
+                            <button id="batch-booked-btn" class="px-3.5 py-1.5 rounded-xl border border-rose-300 bg-rose-50 text-rose-800 text-xs font-bold hover:bg-rose-100 transition-all flex items-center gap-1.5 shadow-sm">
+                                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Set Floor Booked
+                            </button>
+                            <button id="reset-defaults-btn" class="px-3.5 py-1.5 rounded-xl border border-charcoal/20 bg-white text-charcoal text-xs font-bold hover:bg-sand transition-all flex items-center gap-1.5 shadow-sm">
+                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Default
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Floor Header Indicator -->
+                <div class="bg-forest/5 p-4 rounded-2xl border border-forest/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div>
+                        <h3 id="admin-current-floor-heading" class="font-serif text-2xl font-bold text-forest">2nd Floor Seat Layout</h3>
+                        <p class="text-xs text-charcoal/60">Click any bed button to edit resident name or toggle Available/Booked.</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs bg-white px-3.5 py-2 rounded-xl border border-charcoal/10 shadow-sm">
+                        <span class="text-charcoal/60 font-medium">Active Floor Stats:</span>
+                        <span class="font-bold text-emerald-700 flex items-center gap-1" id="admin-floor-stat-avail"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> 0 Available</span>
+                        <span class="text-charcoal/30">•</span>
+                        <span class="font-bold text-rose-700 flex items-center gap-1" id="admin-floor-stat-booked"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> 0 Booked</span>
+                    </div>
+                </div>
+
+                <!-- Admin Room & Bed Toggle Matrix Grid -->
+                <div id="admin-room-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TAB 2: REGISTERED MEMBERS & SIGNUPS DIRECTORY -->
+            <!-- ============================================================= -->
+            <div id="view-users-tab" class="space-y-8 hidden">
+                
+                <!-- Members KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-3xl border border-charcoal/10 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-charcoal/60 tracking-wider">Total Registered Members</span>
+                            <h3 class="text-3xl font-serif font-bold text-forest mt-1" id="kpi-total-users">0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-forest/10 text-forest flex items-center justify-center">
+                            <i data-lucide="users" class="w-6 h-6 text-gold"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border border-charcoal/10 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-charcoal/60 tracking-wider">Active Online Sessions</span>
+                            <h3 class="text-3xl font-serif font-bold text-emerald-600 mt-1" id="kpi-active-sessions">0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border border-charcoal/10 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-charcoal/60 tracking-wider">Administrator Roles</span>
+                            <h3 class="text-3xl font-serif font-bold text-gold mt-1" id="kpi-admin-count">1</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-gold/10 text-gold flex items-center justify-center">
+                            <i data-lucide="shield" class="w-6 h-6 text-forest"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Directory Table Card -->
+                <div class="bg-white rounded-3xl border border-charcoal/10 shadow-md p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-charcoal/10">
+                        <div>
+                            <h3 class="font-serif text-2xl font-bold text-forest">Registered Users Roster</h3>
+                            <p class="text-xs text-charcoal/60">Live list of all students and members registered on the Green House portal.</p>
+                        </div>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <div class="relative w-full sm:w-64">
+                                <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3.5 top-3 text-charcoal/40"></i>
+                                <input type="text" id="user-table-search" placeholder="Search members..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-charcoal/20 focus:border-forest focus:outline-none">
+                            </div>
+                            <button onclick="fetchAndRenderUsers()" class="p-2 min-h-[38px] rounded-xl border border-charcoal/20 hover:bg-sand text-charcoal transition-all" title="Refresh User List">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- User Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-sand/60 text-charcoal/70 uppercase tracking-wider font-bold">
+                                <tr>
+                                    <th class="p-3.5 rounded-l-xl">Member Name</th>
+                                    <th class="p-3.5">Email Address</th>
+                                    <th class="p-3.5">Phone Number</th>
+                                    <th class="p-3.5">Role</th>
+                                    <th class="p-3.5">Registered Date</th>
+                                    <th class="p-3.5 rounded-r-xl">Last Login</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body" class="divide-y divide-charcoal/5 font-medium">
+                                <!-- Populated dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Occupant / Bed Assignment Modal -->
+    <div id="occupant-modal" class="fixed inset-0 z-50 hidden bg-forest/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-charcoal/10 relative fade-in">
+            <button onclick="closeOccupantModal()" class="absolute top-5 right-5 text-charcoal/50 hover:text-forest p-1.5 rounded-full hover:bg-sand transition-colors" aria-label="Close Modal">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="mb-5">
+                <span id="modal-bed-badge" class="text-[10px] font-bold uppercase tracking-wider bg-forest text-gold px-2.5 py-1 rounded">Room 201 • Bed A</span>
+                <h3 class="font-serif text-2xl font-bold text-forest mt-2">Manage Bed Assignment</h3>
+                <p class="text-xs text-charcoal/60">Update live availability and private resident records.</p>
+            </div>
+
+            <form id="occupant-form" class="space-y-4">
+                <input type="hidden" id="modal-floor-val">
+                <input type="hidden" id="modal-room-val">
+                <input type="hidden" id="modal-seat-val">
+
+                <!-- Status Selector -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Seat Status</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" id="btn-status-avail" onclick="setModalStatus('available')" class="py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-emerald-50 text-emerald-800 border-emerald-300">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> Available
+                        </button>
+                        <button type="button" id="btn-status-booked" onclick="setModalStatus('booked')" class="py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-sand text-charcoal/70 border-charcoal/20">
+                            <i data-lucide="x-circle" class="w-4 h-4"></i> Booked
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resident Details (Shown when status is booked) -->
+                <div id="modal-resident-fields" class="space-y-3.5 pt-2 border-t border-charcoal/10">
+                    <div>
+                        <label for="modal-occupant-name" class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Resident Full Name</label>
+                        <input type="text" id="modal-occupant-name" placeholder="e.g. Tanvir Hasan" class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 text-sm focus:border-forest focus:ring-1 focus:ring-forest">
+                    </div>
+                    <div>
+                        <label for="modal-occupant-phone" class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Resident Phone / WhatsApp</label>
+                        <input type="tel" id="modal-occupant-phone" placeholder="+880 17XXXXXXXX" class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 text-sm focus:border-forest focus:ring-1 focus:ring-forest">
+                    </div>
+                    <div>
+                        <label for="modal-occupant-notes" class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Booking Notes / Move-in Date</label>
+                        <input type="text" id="modal-occupant-notes" placeholder="e.g. Move-in 1st Sept / Student ID: 2110..." class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 text-sm focus:border-forest focus:ring-1 focus:ring-forest">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-3">
+                    <button type="submit" class="flex-1 bg-forest text-gold font-bold py-3 rounded-xl uppercase tracking-wider text-xs hover:bg-gold hover:text-forest transition-all shadow-md flex items-center justify-center gap-1.5">
+                        <i data-lucide="save" class="w-4 h-4"></i> Save Bed Details
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-forest text-white py-6 border-t border-gold/20 mt-auto text-center text-xs text-offwhite/50">
+        Green House Hostel Admin Management Portal &copy; 2026. Authorized Access Only.
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        const LOCAL_STORAGE_KEY = 'ghh_hostel1_admin_state';
+        const FLOORS = [2, 3, 4, 5, 6, 7];
+
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function getOrdinalFloor(f) {
+            const ordinals = { 2: '2nd Floor', 3: '3rd Floor', 4: '4th Floor', 5: '5th Floor', 6: '6th Floor', 7: '7th Floor' };
+            return ordinals[f] || `${f}th Floor`;
+        }
+
+        const BASE_ROOM_TEMPLATES = [
+            { num: 1, seatsCount: 1, rent: 12500, desc: 'Single Seat Private Room' },
+            { num: 2, seatsCount: 1, rent: 11000, desc: 'Single Seat Standard Room' },
+            { num: 3, seatsCount: 3, rent: 11000, desc: 'Triple Seat Room' },
+            { num: 4, seatsCount: 2, rent: 12500, desc: 'Double Seat Deluxe Room' },
+            { num: 5, seatsCount: 2, rent: 11000, desc: 'Double Seat Standard Room' },
+            { num: 6, seatsCount: 2, rent: 10500, desc: 'Double Seat Economy Room' },
+            { num: 7, seatsCount: 1, rent: 13500, desc: 'Single Seat Executive Room' },
+            { num: 8, seatsCount: 1, rent: 9500,  desc: 'Single Seat Budget Room' },
+            { num: 9, seatsCount: 2, rent: 13500, desc: 'Double Seat Deluxe Room' },
+            { num: 10, seatsCount: 2, rent: 12500, desc: 'Double Seat Premium Room' }
+        ];
+
+        function getRoomsForFloor(floorNumber) {
+            if (floorNumber === 2) {
+                return [
+                    { id: 201, name: '201', seatsCount: 1, rent: 12500, desc: 'Single Seat Private Room' },
+                    { id: 202, name: '202', seatsCount: 1, rent: 11000, desc: 'Single Seat Standard Room' },
+                    { id: 203, name: '203', seatsCount: 3, rent: 11000, desc: 'Triple Seat Room' },
+                    { id: 204, name: '204', seatsCount: 2, rent: 12500, desc: 'Double Seat Deluxe Room' },
+                    { id: 205, name: '205', seatsCount: 1, rent: 12000, desc: 'Single Seat Premium Room' },
+                    { id: 206, name: '206', seatsCount: 1, rent: 12000, desc: 'Single Seat Premium Room' },
+                    { id: 208, name: '208', seatsCount: 1, rent: 9500, desc: 'Single Seat Budget Room' },
+                    { id: 209, name: '209', seatsCount: 2, rent: 13500, desc: 'Double Seat Executive Room' },
+                    { id: 210, name: '210', seatsCount: 2, rent: 12500, desc: 'Double Seat Premium Room' }
+                ];
+            } else if (floorNumber === 7) {
+                return [
+                    { id: 701, name: '701', seatsCount: 3, rent: 9500, desc: 'Triple Seat Room' },
+                    { id: 702, name: '702', seatsCount: 1, rent: 7500, desc: 'Single Seat Budget Room' },
+                    { id: 703, name: '703', seatsCount: 3, rent: 8500, desc: 'Triple Seat Economy Room' },
+                    { id: 704, name: '704', seatsCount: 3, rent: 8500, desc: 'Triple Seat Economy Room' }
+                ];
+            }
+
+            let count = 10;
+            return BASE_ROOM_TEMPLATES.slice(0, count).map(tpl => {
+                const roomCode = floorNumber * 100 + tpl.num;
+                return {
+                    id: roomCode,
+                    name: `${roomCode}`,
+                    seatsCount: tpl.seatsCount,
+                    rent: tpl.rent,
+                    desc: tpl.desc
+                };
+            });
+        }
+
+        // Data containers
+        let currentSeatData = {
+            state: {},
+            occupants: {}
+        };
+        let cachedUsersList = [];
+        let adminActiveFloor = 2;
+        let adminActiveFilter = 'all';
+        let searchQuery = '';
+        let modalActiveStatus = 'available';
+
+        function getDefaultState() {
+            const state = {};
+            const occupants = {};
+            FLOORS.forEach(floor => {
+                state[floor] = {};
+                occupants[floor] = {};
+                const rooms = getRoomsForFloor(floor);
+                rooms.forEach(room => {
+                    state[floor][room.id] = {};
+                    occupants[floor][room.id] = {};
+                    for (let s = 1; s <= room.seatsCount; s++) {
+                        const seatLetter = String.fromCharCode(64 + s);
+                        const isBooked = (floor === 2 && room.id === 203 && seatLetter === 'A') ||
+                                         (floor === 3 && room.id === 307 && seatLetter === 'A') ||
+                                         (floor === 4 && room.id === 409 && seatLetter === 'B');
+                        state[floor][room.id][seatLetter] = isBooked ? 'booked' : 'available';
+                        if (isBooked) {
+                            occupants[floor][room.id][seatLetter] = {
+                                name: "Sample Resident",
+                                phone: "+880 1703-585853",
+                                notes: "Pre-reserved student"
+                            };
+                        }
+                    }
+                });
+            });
+            return { state, occupants };
+        }
+
+        async function loadSeatData() {
+            // Try fetching from server API first with cache-busting
+            const token = window.GHH_AUTH.getToken();
+            if (token) {
+                try {
+                    const resp = await fetch(`/api/seats?_t=${Date.now()}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (resp.ok) {
+                        const json = await resp.json();
+                        if (json && json.state) {
+                            currentSeatData = json;
+                            if (!currentSeatData.occupants) currentSeatData.occupants = {};
+                            return;
+                        }
+                    }
+                } catch(e) {}
+            }
+
+            // Local fallback
+            const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.state) {
+                        currentSeatData = parsed;
+                        if (!currentSeatData.occupants) currentSeatData.occupants = {};
+                    } else {
+                        currentSeatData = { state: parsed, occupants: {} };
+                    }
+                    return;
+                } catch(e) {}
+            }
+
+            currentSeatData = getDefaultState();
+        }
+
+        async function saveSeatData(toastMsg) {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentSeatData));
+            if (toastMsg) showToast(toastMsg);
+
+            // Broadcast real-time update to all open public tabs/windows instantly
+            if (typeof BroadcastChannel !== 'undefined') {
+                try {
+                    const channel = new BroadcastChannel('ghh_seat_sync');
+                    channel.postMessage({ type: 'SEAT_UPDATE', data: currentSeatData });
+                    channel.close();
+                } catch(e) {}
+            }
+
+            const token = window.GHH_AUTH.getToken();
+            if (token) {
+                try {
+                    const resp = await fetch('/api/seats', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                            'Cache-Control': 'no-cache'
+                        },
+                        body: JSON.stringify(currentSeatData)
+                    });
+                    if (!resp.ok) {
+                        if (resp.status === 401 || resp.status === 403) {
+                            showToast("⚠️ Admin session expired. Please sign in again to sync changes to mobile devices.");
+                        }
+                    }
+                } catch(e) {
+                    // Static hosting or offline
+                }
+            } else {
+                showToast("⚠️ Not logged in as Admin. Changes saved locally only.");
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('admin-toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => { toast.classList.add('hidden'); }, 2500);
+        }
+
+        // Tab Switching (Seats vs Users)
+        function switchAdminTab(tab) {
+            const seatsTabBtn = document.getElementById('nav-tab-seats');
+            const usersTabBtn = document.getElementById('nav-tab-users');
+            const seatsView = document.getElementById('view-seats-tab');
+            const usersView = document.getElementById('view-users-tab');
+
+            if (tab === 'seats') {
+                seatsTabBtn.className = 'px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-forest text-gold shadow-md flex items-center gap-2 transition-all';
+                usersTabBtn.className = 'px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-sand text-charcoal hover:bg-forest/10 flex items-center gap-2 transition-all';
+                seatsView.classList.remove('hidden');
+                usersView.classList.add('hidden');
+                renderAdminDashboard();
+            } else {
+                usersTabBtn.className = 'px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-forest text-gold shadow-md flex items-center gap-2 transition-all';
+                seatsTabBtn.className = 'px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-xs uppercase tracking-wider bg-sand text-charcoal hover:bg-forest/10 flex items-center gap-2 transition-all';
+                usersView.classList.remove('hidden');
+                seatsView.classList.add('hidden');
+                fetchAndRenderUsers();
+            }
+        }
+
+        // Render Seats Matrix
+        function renderAdminDashboard() {
+            updateOverallStats();
+            renderAdminRoomGrid();
+        }
+
+        function updateOverallStats() {
+            let total = 0;
+            let avail = 0;
+            let booked = 0;
+
+            const state = currentSeatData.state || {};
+
+            FLOORS.forEach(f => {
+                const rooms = getRoomsForFloor(f);
+                const floorData = state[f] || {};
+                rooms.forEach(r => {
+                    for (let s = 1; s <= r.seatsCount; s++) {
+                        total++;
+                        const letter = String.fromCharCode(64 + s);
+                        const status = (floorData[r.id] && floorData[r.id][letter]) || 'available';
+                        if (status === 'booked') booked++;
+                        else avail++;
+                    }
+                });
+            });
+
+            const occupancyPercent = total > 0 ? Math.round((booked / total) * 100) : 0;
+
+            document.getElementById('stat-total-beds').textContent = total;
+            document.getElementById('stat-available-beds').textContent = avail;
+            document.getElementById('stat-booked-beds').textContent = booked;
+            document.getElementById('stat-occupancy-rate').textContent = `${occupancyPercent}%`;
+            document.getElementById('stat-occupancy-label').textContent = `${occupancyPercent}% Booked (${booked} of ${total} Beds)`;
+            document.getElementById('occupancy-progress-bar').style.width = `${occupancyPercent}%`;
+        }
+
+        function renderAdminRoomGrid() {
+            const container = document.getElementById('admin-room-grid');
+            container.innerHTML = '';
+
+            document.getElementById('admin-current-floor-heading').textContent = `${getOrdinalFloor(adminActiveFloor)} Seat Layout`;
+
+            const floorState = (currentSeatData.state && currentSeatData.state[adminActiveFloor]) || {};
+            const floorOccupants = (currentSeatData.occupants && currentSeatData.occupants[adminActiveFloor]) || {};
+            const rooms = getRoomsForFloor(adminActiveFloor);
+
+            let floorAvail = 0;
+            let floorBooked = 0;
+
+            rooms.forEach(r => {
+                for (let s = 1; s <= r.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    const status = (floorState[r.id] && floorState[r.id][letter]) || 'available';
+                    if (status === 'booked') floorBooked++;
+                    else floorAvail++;
+                }
+            });
+
+            document.getElementById('admin-floor-stat-avail').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> ${floorAvail} Available`;
+            document.getElementById('admin-floor-stat-booked').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> ${floorBooked} Booked`;
+
+            // Filter rooms
+            const filteredRooms = rooms.filter(room => {
+                if (adminActiveFilter !== 'all' && room.seatsCount !== parseInt(adminActiveFilter)) {
+                    return false;
+                }
+                if (!searchQuery) return true;
+                const matchName = room.name.toLowerCase().includes(searchQuery);
+                const matchDesc = room.desc.toLowerCase().includes(searchQuery);
+                const matchId = String(room.id).includes(searchQuery);
+
+                // Check resident name search
+                let matchResident = false;
+                if (floorOccupants[room.id]) {
+                    Object.values(floorOccupants[room.id]).forEach(occ => {
+                        if (occ && occ.name && occ.name.toLowerCase().includes(searchQuery)) matchResident = true;
+                    });
+                }
+
+                return matchName || matchDesc || matchId || matchResident;
+            });
+
+            if (filteredRooms.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-10 rounded-2xl border border-charcoal/10 text-center shadow-sm">
+                        <div class="w-12 h-12 bg-sand rounded-xl flex items-center justify-center mx-auto mb-3 text-forest">
+                            <i data-lucide="search-x" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-lg text-forest mb-1">No matching rooms or residents found</h4>
+                        <p class="text-charcoal/60 text-xs">Try selecting a different floor, search term, or filter.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filteredRooms.forEach(room => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-2xl border border-charcoal/10 shadow-sm hover:shadow-md transition-all fade-in flex flex-col justify-between';
+
+                let seatsHtml = '';
+                for (let s = 1; s <= room.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    const status = (floorState[room.id] && floorState[room.id][letter]) || 'available';
+                    const isBooked = status === 'booked';
+                    const occupantInfo = (floorOccupants[room.id] && floorOccupants[room.id][letter]) || null;
+                    
+                    const btnBg = isBooked 
+                        ? 'bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100 ring-1 ring-rose-200' 
+                        : 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 ring-1 ring-emerald-200';
+                    const icon = isBooked ? 'x-circle' : 'check-circle';
+                    const badgeText = isBooked ? 'Booked' : 'Available';
+                    const residentLabel = (isBooked && occupantInfo && occupantInfo.name) ? escapeHtml(occupantInfo.name) : '';
+
+                    seatsHtml += `
+                        <button onclick="openOccupantModal(${adminActiveFloor}, ${room.id}, '${letter}')" class="flex-1 py-3 px-2 min-h-[56px] rounded-xl border flex flex-col items-center justify-center gap-1 transition-all active:scale-95 shadow-sm ${btnBg}">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="bed" class="w-3.5 h-3.5"></i>
+                                <span class="text-xs font-black">Bed ${letter}</span>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-wider font-extrabold flex items-center gap-1">
+                                <i data-lucide="${icon}" class="w-3 h-3"></i> ${badgeText}
+                            </span>
+                            ${residentLabel ? `<span class="text-[9px] font-bold text-forest truncate max-w-[80px]">${residentLabel}</span>` : ''}
+                        </button>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4 pb-3 border-b border-charcoal/5">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-serif font-bold text-xl text-forest">Room ${room.name}</h4>
+                                <span class="text-[10px] font-bold uppercase bg-forest/5 text-forest px-2 py-0.5 rounded">${room.seatsCount} Bed</span>
+                            </div>
+                            <p class="text-[11px] text-charcoal/60 mt-0.5">${room.desc}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-mono font-bold text-gold">${room.rent.toLocaleString()} TK</span>
+                            <div class="text-[9px] text-charcoal/40 uppercase font-semibold">Rent/Mo</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2.5 mt-2">${seatsHtml}</div>
+                `;
+                container.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Occupant Modal Handlers
+        function openOccupantModal(floor, roomId, seatLetter) {
+            const floorState = currentSeatData.state[floor] || {};
+            const floorOccupants = currentSeatData.occupants[floor] || {};
+            const currentStatus = (floorState[roomId] && floorState[roomId][seatLetter]) || 'available';
+            const occ = (floorOccupants[roomId] && floorOccupants[roomId][seatLetter]) || {};
+
+            document.getElementById('modal-floor-val').value = floor;
+            document.getElementById('modal-room-val').value = roomId;
+            document.getElementById('modal-seat-val').value = seatLetter;
+
+            document.getElementById('modal-bed-badge').textContent = `${getOrdinalFloor(floor)} • Room ${roomId} • Bed ${seatLetter}`;
+            document.getElementById('modal-occupant-name').value = occ.name || '';
+            document.getElementById('modal-occupant-phone').value = occ.phone || '';
+            document.getElementById('modal-occupant-notes').value = occ.notes || '';
+
+            setModalStatus(currentStatus);
+            document.getElementById('occupant-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeOccupantModal() {
+            document.getElementById('occupant-modal').classList.add('hidden');
+        }
+
+        function setModalStatus(status) {
+            modalActiveStatus = status;
+            const availBtn = document.getElementById('btn-status-avail');
+            const bookedBtn = document.getElementById('btn-status-booked');
+            const residentFields = document.getElementById('modal-resident-fields');
+
+            if (status === 'available') {
+                availBtn.className = 'py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-emerald-50 text-emerald-800 border-emerald-300 ring-2 ring-emerald-400';
+                bookedBtn.className = 'py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-sand text-charcoal/70 border-charcoal/20';
+                residentFields.classList.add('hidden');
+            } else {
+                bookedBtn.className = 'py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-rose-50 text-rose-800 border-rose-300 ring-2 ring-rose-400';
+                availBtn.className = 'py-2.5 px-3 rounded-xl border font-bold text-xs flex items-center justify-center gap-1.5 transition-all bg-sand text-charcoal/70 border-charcoal/20';
+                residentFields.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('occupant-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const floor = parseInt(document.getElementById('modal-floor-val').value);
+            const roomId = parseInt(document.getElementById('modal-room-val').value);
+            const seat = document.getElementById('modal-seat-val').value;
+
+            if (!currentSeatData.state[floor]) currentSeatData.state[floor] = {};
+            if (!currentSeatData.state[floor][roomId]) currentSeatData.state[floor][roomId] = {};
+            if (!currentSeatData.occupants[floor]) currentSeatData.occupants[floor] = {};
+            if (!currentSeatData.occupants[floor][roomId]) currentSeatData.occupants[floor][roomId] = {};
+
+            currentSeatData.state[floor][roomId][seat] = modalActiveStatus;
+
+            if (modalActiveStatus === 'booked') {
+                currentSeatData.occupants[floor][roomId][seat] = {
+                    name: document.getElementById('modal-occupant-name').value.trim(),
+                    phone: document.getElementById('modal-occupant-phone').value.trim(),
+                    notes: document.getElementById('modal-occupant-notes').value.trim(),
+                    updatedAt: new Date().toISOString()
+                };
+            } else {
+                delete currentSeatData.occupants[floor][roomId][seat];
+            }
+
+            closeOccupantModal();
+            await saveSeatData(`Room ${roomId} Bed ${seat} updated.`);
+            renderAdminDashboard();
+        });
+
+        // Registered Users Directory Loader
+        async function fetchAndRenderUsers() {
+            const token = window.GHH_AUTH.getToken();
+            const tbody = document.getElementById('user-table-body');
+            tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-charcoal/50">Loading registered members...</td></tr>`;
+
+            try {
+                const resp = await fetch('/api/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const contentType = resp.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    const data = await resp.json();
+                    if (resp.ok && data.users) {
+                        cachedUsersList = data.users || [];
+                        document.getElementById('kpi-total-users').textContent = data.total || cachedUsersList.length;
+                        document.getElementById('kpi-active-sessions').textContent = data.activeSessions || 1;
+                        document.getElementById('tab-user-count').textContent = data.total || cachedUsersList.length;
+
+                        const adminCount = cachedUsersList.filter(u => u.role === 'admin').length;
+                        document.getElementById('kpi-admin-count').textContent = adminCount;
+
+                        renderUserTableRows(cachedUsersList);
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            // Client-side fallback: Load live users from client database (Cloudflare / static)
+            if (window.GHH_AUTH && window.GHH_AUTH.clientGetUsers) {
+                const clientData = window.GHH_AUTH.clientGetUsers();
+                if (clientData && clientData.users && clientData.users.length > 0) {
+                    cachedUsersList = clientData.users;
+                    document.getElementById('kpi-total-users').textContent = clientData.total;
+                    document.getElementById('kpi-active-sessions').textContent = clientData.activeSessions || 1;
+                    document.getElementById('tab-user-count').textContent = clientData.total;
+
+                    const adminCount = cachedUsersList.filter(u => u.role === 'admin').length;
+                    document.getElementById('kpi-admin-count').textContent = adminCount;
+
+                    renderUserTableRows(cachedUsersList);
+                    return;
+                }
+            }
+
+            // Fallback display if running purely static
+            tbody.innerHTML = `
+                <tr class="hover:bg-sand/30 transition-colors">
+                    <td class="p-3.5 font-bold text-forest flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-forest text-gold flex items-center justify-center font-bold text-xs">A</div>
+                        Green House Administrator
+                    </td>
+                    <td class="p-3.5 font-mono text-charcoal/80">greenhouse5014@gmail.com</td>
+                    <td class="p-3.5 font-mono">+880 1703-585853</td>
+                    <td class="p-3.5"><span class="bg-gold/20 text-forest font-bold px-2 py-0.5 rounded text-[10px] uppercase">Admin</span></td>
+                    <td class="p-3.5 text-charcoal/60">2026-08-01</td>
+                    <td class="p-3.5 text-emerald-700 font-semibold">Active Now</td>
+                </tr>
+            `;
+        }
+
+        function renderUserTableRows(users) {
+            const tbody = document.getElementById('user-table-body');
+            const query = (document.getElementById('user-table-search').value || '').trim().toLowerCase();
+
+            const filtered = users.filter(u => {
+                if (!query) return true;
+                return (u.name && u.name.toLowerCase().includes(query)) ||
+                       (u.email && u.email.toLowerCase().includes(query)) ||
+                       (u.phone && u.phone.toLowerCase().includes(query));
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-charcoal/50">No registered members match "${escapeHtml(query)}".</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(u => {
+                const safeName = escapeHtml(u.name || '');
+                const safeEmail = escapeHtml(u.email || '');
+                const safePhone = escapeHtml(u.phone || '—');
+                const safeCreated = escapeHtml(u.createdAt || '—');
+                const safeLastLogin = escapeHtml(u.lastLoginAt || '—');
+                const initial = safeName ? safeName.charAt(0).toUpperCase() : 'U';
+                const roleBadge = u.role === 'admin' 
+                    ? `<span class="bg-forest text-gold font-bold px-2 py-0.5 rounded text-[10px] uppercase">Admin</span>`
+                    : `<span class="bg-sand text-charcoal font-bold px-2 py-0.5 rounded text-[10px] uppercase border border-charcoal/10">Resident</span>`;
+
+                return `
+                    <tr class="hover:bg-sand/40 transition-colors">
+                        <td class="p-3.5 font-bold text-forest">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-full bg-forest text-gold flex items-center justify-center font-bold text-xs shrink-0">${initial}</div>
+                                <span class="truncate max-w-[180px]">${safeName}</span>
+                            </div>
+                        </td>
+                        <td class="p-3.5 font-mono text-charcoal/80">${safeEmail}</td>
+                        <td class="p-3.5 font-mono text-charcoal/70">${safePhone}</td>
+                        <td class="p-3.5">${roleBadge}</td>
+                        <td class="p-3.5 text-charcoal/60">${safeCreated}</td>
+                        <td class="p-3.5 text-charcoal/70">${safeLastLogin}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Table search input
+        const userSearchInput = document.getElementById('user-table-search');
+        if (userSearchInput) {
+            userSearchInput.addEventListener('input', () => {
+                renderUserTableRows(cachedUsersList);
+            });
+        }
+
+        // Room Search Input Listener
+        const roomSearchInput = document.getElementById('admin-room-search');
+        if (roomSearchInput) {
+            roomSearchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                renderAdminRoomGrid();
+            });
+        }
+
+        // Floor selector buttons
+        document.querySelectorAll('#admin-floor-selector .admin-floor-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#admin-floor-selector .admin-floor-btn').forEach(b => {
+                    b.className = 'admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 flex items-center justify-center';
+                });
+                btn.className = 'admin-floor-btn px-4 py-2 min-h-[40px] rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-md flex items-center justify-center';
+
+                adminActiveFloor = parseInt(btn.getAttribute('data-floor'));
+                renderAdminRoomGrid();
+            });
+        });
+
+        // Room Category Filter Pills
+        document.querySelectorAll('#admin-filter-pills .admin-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#admin-filter-pills .admin-filter-btn').forEach(b => {
+                    b.className = 'admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10';
+                });
+                btn.className = 'admin-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-sm';
+
+                adminActiveFilter = btn.getAttribute('data-filter');
+                renderAdminRoomGrid();
+            });
+        });
+
+        // Batch Actions
+        document.getElementById('batch-available-btn').addEventListener('click', async () => {
+            const ordinalName = getOrdinalFloor(adminActiveFloor);
+            if (!confirm(`Set all beds on ${ordinalName} to AVAILABLE?`)) return;
+            const rooms = getRoomsForFloor(adminActiveFloor);
+            if (!currentSeatData.state[adminActiveFloor]) currentSeatData.state[adminActiveFloor] = {};
+            if (!currentSeatData.occupants[adminActiveFloor]) currentSeatData.occupants[adminActiveFloor] = {};
+            rooms.forEach(r => {
+                if (!currentSeatData.state[adminActiveFloor][r.id]) currentSeatData.state[adminActiveFloor][r.id] = {};
+                for (let s = 1; s <= r.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    currentSeatData.state[adminActiveFloor][r.id][letter] = 'available';
+                }
+                currentSeatData.occupants[adminActiveFloor][r.id] = {};
+            });
+            await saveSeatData(`All beds on ${ordinalName} set to AVAILABLE`);
+            renderAdminDashboard();
+        });
+
+        document.getElementById('batch-booked-btn').addEventListener('click', async () => {
+            const ordinalName = getOrdinalFloor(adminActiveFloor);
+            if (!confirm(`Set all beds on ${ordinalName} to BOOKED?`)) return;
+            const rooms = getRoomsForFloor(adminActiveFloor);
+            if (!currentSeatData.state[adminActiveFloor]) currentSeatData.state[adminActiveFloor] = {};
+            if (!currentSeatData.occupants) currentSeatData.occupants = {};
+            if (!currentSeatData.occupants[adminActiveFloor]) currentSeatData.occupants[adminActiveFloor] = {};
+            rooms.forEach(r => {
+                if (!currentSeatData.state[adminActiveFloor][r.id]) currentSeatData.state[adminActiveFloor][r.id] = {};
+                for (let s = 1; s <= r.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    currentSeatData.state[adminActiveFloor][r.id][letter] = 'booked';
+                }
+            });
+            await saveSeatData(`All beds on ${ordinalName} set to BOOKED`);
+            renderAdminDashboard();
+        });
+
+        document.getElementById('reset-defaults-btn').addEventListener('click', async () => {
+            if (!confirm("Reset seat availability data across ALL floors to default state?")) return;
+            currentSeatData = getDefaultState();
+            await saveSeatData('Reset all floor data to default state');
+            renderAdminDashboard();
+        });
+
+        // Initialize Authentication on page load
+        async function checkAdminAuth() {
+            const user = window.GHH_AUTH.getUser();
+            const token = window.GHH_AUTH.getToken();
+
+            if (user && (user.role === 'admin' || user.email === 'greenhouse5014@gmail.com') && token) {
+                document.getElementById('login-container').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('auth-status-bar').classList.remove('hidden');
+                document.getElementById('logged-in-user').textContent = user.name || user.email;
+
+                await loadSeatData();
+                renderAdminDashboard();
+                fetchAndRenderUsers();
+            } else {
+                document.getElementById('login-container').classList.remove('hidden');
+                document.getElementById('admin-dashboard').classList.add('hidden');
+                document.getElementById('auth-status-bar').classList.add('hidden');
+            }
+        }
+
+        // Direct Login Form on admin.html
+        document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-email-input').value.trim().toLowerCase();
+            const pass = document.getElementById('admin-pass-input').value;
+            const errEl = document.getElementById('login-error');
+            const errText = document.getElementById('login-error-text');
+            const btn = document.getElementById('admin-submit-btn');
+            const label = document.getElementById('admin-btn-label');
+
+            btn.disabled = true;
+            label.textContent = "Verifying...";
+            errEl.classList.add('hidden');
+
+            let authResult = null;
+
+            // 1. Attempt server API first
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3500);
+                const resp = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password: pass }),
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                const contentType = resp.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    const data = await resp.json();
+                    if (resp.ok && data.success) {
+                        authResult = data;
+                    }
+                }
+            } catch(e) {}
+
+            // 2. Resilient Client-side auth fallback (for Cloudflare / Static hostings)
+            if (!authResult && window.GHH_AUTH && window.GHH_AUTH.clientLogin) {
+                authResult = await window.GHH_AUTH.clientLogin(email, pass);
+            }
+
+            if (authResult && authResult.success) {
+                if (authResult.user.role !== 'admin' && authResult.user.email !== 'greenhouse5014@gmail.com') {
+                    errText.textContent = "Access denied: This account does not have administrator privileges.";
+                    errEl.classList.remove('hidden');
+                    btn.disabled = false;
+                    label.textContent = "Access Admin Dashboard";
+                    return;
+                }
+                window.GHH_AUTH.setSession(authResult.token, authResult.user);
+                checkAdminAuth();
+                btn.disabled = false;
+                label.textContent = "Access Admin Dashboard";
+                return;
+            } else {
+                errText.textContent = (authResult && authResult.message) || "Invalid administrator credentials.";
+                errEl.classList.remove('hidden');
+                btn.disabled = false;
+                label.textContent = "Access Admin Dashboard";
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdminAuth();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

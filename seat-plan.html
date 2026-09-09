@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Seat Plan & Bed Booking System for Green House Hostel 1 (Boys). View real-time seat availability, floor layouts, and reserve your room online.">
+    <title>Seat Plan & Booking - Green House Hostel 1 (Boys)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0F2C22',
+                        sage: '#5E846A',
+                        gold: '#DFB15B',
+                        cream: '#FDFBF7',
+                        sand: '#F5EFE4',
+                        charcoal: '#1C2B24',
+                        offwhite: '#E2ECE9',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css?v=12">
+    <script src="theme-toggle.js"></script>
+    <script src="auth.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased selection:bg-gold selection:text-forest flex flex-col min-h-screen">
+
+    <!-- Sticky Frosted Navbar -->
+    <nav id="navbar" class="fixed w-full z-40 py-4 transition-all duration-300 bg-forest/95 backdrop-blur-md border-b border-gold/20 text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center w-full justify-between">
+            <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 sm:h-12 w-auto">
+                <span class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white">Green House</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-6 text-xs tracking-widest uppercase text-offwhite font-medium">
+                <a href="index.html" class="hover:text-gold transition-colors">Home</a>
+                <a href="index.html#locations" class="hover:text-gold transition-colors">Branches</a>
+                <a href="seat-plan.html" class="text-gold font-bold transition-colors flex items-center gap-1">
+                    <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Seat Plan
+                </a>
+                <a href="index.html#menu" class="hover:text-gold transition-colors">Menu & Rules</a>
+            </div>
+
+            <div class="flex items-center gap-2.5 shrink-0">
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn w-11 h-11 min-w-[44px] min-h-[44px] rounded-full text-gold bg-white/10 hover:bg-gold hover:text-forest transition-all flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+                <div id="auth-nav-slot"></div>
+                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20have%20a%20question%20about%20Seat%20Plan." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex bg-gold text-forest px-4 py-2 min-h-[44px] rounded-full text-xs font-bold uppercase tracking-wider hover:bg-white transition-all shadow-md items-center">
+                    Contact Us
+                </a>
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-drawer-toggle" aria-label="Open Navigation Menu" class="md:hidden text-white w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/10 hover:bg-gold hover:text-forest transition-colors flex items-center justify-center">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer & Backdrop -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"></div>
+    <aside id="mobile-drawer" class="fixed top-0 right-0 w-[280px] sm:w-[320px] h-full bg-forest text-white z-50 p-6 flex flex-col justify-between shadow-2xl border-l border-gold/20">
+        <div>
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-2.5">
+                    <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-9 w-auto">
+                    <span class="font-serif font-bold text-lg text-white">Green House</span>
+                </div>
+                <button id="mobile-drawer-close" aria-label="Close Navigation Menu" class="w-11 h-11 min-w-[44px] min-h-[44px] text-white/70 hover:text-gold rounded-lg flex items-center justify-center">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-4 text-sm font-medium uppercase tracking-widest">
+                <a href="index.html" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Home</a>
+                <a href="index.html#locations" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Our Branches</a>
+                <a href="hostel-1-boys.html" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Hostel 1 (Boys)</a>
+                <a href="seat-plan.html" class="block py-2 text-gold font-bold border-b border-white/5 flex items-center gap-2">
+                    <i data-lucide="layout-grid" class="w-4 h-4 text-gold"></i> Live Seat Plan (Hostel 1)
+                </a>
+                <a href="index.html#menu" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Weekly Menu & Rules</a>
+                <a href="admin.html" class="block py-2 text-xs text-gold/80 hover:text-gold flex items-center gap-1.5 pt-2">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Portal
+                </a>
+            </nav>
+        </div>
+
+        <div class="space-y-3 pt-6 border-t border-white/10">
+            <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20have%20a%20question%20about%20Seat%20Plan." target="_blank" rel="noopener noreferrer" class="w-full bg-gold text-forest py-3 rounded-xl font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-lg">
+                <i data-lucide="message-square" class="w-4 h-4"></i> WhatsApp Inquiries
+            </a>
+            <div class="text-center text-[10px] text-offwhite/50 tracking-wider">
+                Hostel 1 (Boys) • Diabari, Uttara
+            </div>
+        </div>
+    </aside>
+
+    <!-- Header / Hero Banner -->
+    <section class="relative pt-28 pb-12 bg-forest text-white overflow-hidden border-b border-gold/20">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#DFB15B_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-gold/10 text-gold px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-gold/30 mb-4">
+                <i data-lucide="building" class="w-4 h-4"></i> Hostel 1 (Boys) - Diabari Branch
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-serif font-bold text-white mb-3">Seat Plan & Room Availability</h1>
+            <p class="text-offwhite/80 max-w-2xl mx-auto text-sm sm:text-base font-light">
+                Select your floor, inspect room options, and choose your preferred seat/bed live. Real-time availability for Diabari, Uttara Branch.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Booking Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-grow w-full">
+
+        <!-- Floor Selector Bar -->
+        <div class="mb-6 bg-sand p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-forest font-serif font-bold text-lg">
+                    <i data-lucide="layers" class="w-5 h-5 text-gold"></i>
+                    <span>Select Floor:</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-center" id="floor-selector">
+                    <button data-floor="2" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-forest text-gold shadow-md">2nd Floor</button>
+                    <button data-floor="3" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10">3rd Floor</button>
+                    <button data-floor="4" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10">4th Floor</button>
+                    <button data-floor="5" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10">5th Floor</button>
+                    <button data-floor="6" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10">6th Floor</button>
+                    <button data-floor="7" class="floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10">7th Floor</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Category Filter Bar -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-6 bg-white p-3 sm:p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+            <div class="flex items-center gap-2 text-xs font-bold text-forest uppercase tracking-wider pl-1">
+                <i data-lucide="filter" class="w-4 h-4 text-gold"></i>
+                <span>Filter By Room Type:</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2" id="room-filter-pills">
+                <button data-filter="all" class="room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-sm">All Rooms</button>
+                <button data-filter="1" class="room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">1-Bed Single</button>
+                <button data-filter="2" class="room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">2-Bed Double</button>
+                <button data-filter="3" class="room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10">3-Bed Triple</button>
+            </div>
+        </div>
+
+        <!-- Floor Header Bar -->
+        <div class="mb-8 text-center bg-forest/5 p-4 rounded-2xl border border-forest/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-left">
+                <h3 id="current-floor-heading" class="font-serif text-2xl font-bold text-forest">2nd Floor Layout</h3>
+                <p class="text-xs text-charcoal/60">Click any <span class="font-bold text-emerald-600">Green</span> available bed on the room cards below to select</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-xs bg-white px-3.5 py-2 rounded-xl border border-charcoal/10 shadow-sm">
+                <span class="text-charcoal/60 font-medium">Floor Stats:</span>
+                <span class="font-bold text-emerald-700 flex items-center gap-1" id="floor-stat-avail"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> 0 Available</span>
+                <span class="text-charcoal/30">•</span>
+                <span class="font-bold text-rose-700 flex items-center gap-1" id="floor-stat-booked"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> 0 Booked</span>
+                <span class="text-charcoal/30">•</span>
+                <span id="live-sync-indicator" class="flex items-center gap-1.5 font-bold text-emerald-700" title="Auto-polling real-time updates from server">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                    <span class="text-[11px] font-semibold text-forest">Live Sync</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Status Legend Bar (Green = Available, Red = Booked, Gold = Selected) -->
+        <div class="flex flex-wrap items-center justify-center gap-6 mb-8 py-3 px-6 bg-white rounded-2xl sm:rounded-full border border-charcoal/10 max-w-xl mx-auto text-xs sm:text-sm font-medium shadow-sm">
+            <div class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-md bg-emerald-500 border border-emerald-600 inline-block shadow-sm"></span>
+                <span class="font-semibold text-emerald-800">Available (Green)</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-md bg-gold border border-amber-600 inline-block shadow-md"></span>
+                <span class="font-bold text-amber-800 dark:text-amber-300">Selected (Gold)</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-md bg-rose-500 border border-rose-600 inline-block shadow-sm"></span>
+                <span class="font-semibold text-rose-800">Booked (Red)</span>
+            </div>
+        </div>
+
+        <!-- Main Layout: Seat Matrix + Summary Sidebar -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Room Grid Container -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Room Grid Container (Card View) -->
+                <div id="room-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Summary Sidebar -->
+            <div class="lg:col-span-4 sticky top-24">
+                <div class="glass-panel rounded-[32px] p-8 text-white shadow-[0_20px_40px_rgb(0,0,0,0.1)] slide-up-fade relative overflow-hidden">
+
+                    <!-- Header -->
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-8 w-auto">
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-gold leading-tight">Green House</h4>
+                                <span class="text-[10px] tracking-widest text-offwhite/60 uppercase">Hostel 1 (Boys)</span>
+                            </div>
+                        </div>
+                        <span class="bg-gold/20 text-gold text-[10px] font-medium px-2.5 py-1 rounded border border-gold/40 uppercase tracking-wider">Reservation</span>
+                    </div>
+
+                    <!-- Booking Details -->
+                    <div class="space-y-4 text-sm font-light">
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-offwhite/60">Branch:</span>
+                            <span class="font-medium text-white">Diabari, Uttara (Boys)</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-offwhite/60">Selected Floor:</span>
+                            <span id="summary-floor" class="font-bold text-gold">2nd Floor</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-offwhite/60">Room & Seat:</span>
+                            <span id="summary-seat" class="font-bold text-white text-base">None Selected</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-offwhite/60">Room Type:</span>
+                            <span id="summary-room-type" class="font-medium text-white">-</span>
+                        </div>
+                        
+                        <!-- Pricing Breakdown -->
+                        <div class="bg-forest/80 p-4 rounded-xl border border-white/10 mt-4 space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-offwhite/70">Monthly Rent:</span>
+                                <span id="summary-rent" class="font-mono text-gold font-bold">0 BDT</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-offwhite/70">Annual Service Charge:</span>
+                                <span id="summary-service" class="font-mono text-white">3,500 BDT</span>
+                            </div>
+                            <div class="flex justify-between text-xs border-t border-white/10 pt-2">
+                                <span class="text-offwhite/70">Daily Meals Included:</span>
+                                <span class="text-emerald-400 font-bold">3 Times / Day</span>
+                            </div>
+                        </div>
+
+                        <!-- Reservation Buttons -->
+                        <div class="space-y-3 pt-4">
+                            <button id="reserve-wa-btn" disabled class="w-full bg-gold text-forest font-bold py-3 px-4 rounded-xl uppercase tracking-wider text-xs hover:bg-white transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                                <i data-lucide="message-square" class="w-4 h-4"></i> Reserve via WhatsApp
+                            </button>
+                            <button id="reserve-modal-btn" disabled class="w-full border border-white/30 text-white font-bold py-2.5 px-4 rounded-xl uppercase tracking-wider text-xs hover:bg-white/10 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                Online Booking Form
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Quick Booking Form Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-forest/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-charcoal/10 relative fade-in-scale">
+            <button id="close-modal-btn" class="absolute top-6 right-6 text-charcoal/50 hover:text-forest">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="mb-6">
+                <h3 class="font-serif text-2xl font-bold text-forest">Complete Reservation</h3>
+                <p class="text-xs text-charcoal/60">Hostel 1 (Boys) - Diabari, Uttara Branch</p>
+            </div>
+            <form id="booking-form" class="space-y-4">
+                <div class="bg-sand p-3 rounded-xl text-xs space-y-1">
+                    <div><strong class="text-forest">Selected Seat:</strong> <span id="modal-seat-name" class="font-bold text-gold"></span></div>
+                    <div><strong class="text-forest">Monthly Rent:</strong> <span id="modal-seat-rent" class="font-mono"></span></div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Full Name</label>
+                    <input type="text" id="modal-name" required placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 focus:border-forest focus:ring-1 focus:ring-forest text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Phone / WhatsApp Number</label>
+                    <input type="tel" id="modal-phone" required placeholder="+880 17XXXXXXXX" class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 focus:border-forest focus:ring-1 focus:ring-forest text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Institution / Profession</label>
+                    <input type="text" id="modal-profession" placeholder="e.g. Student / Software Engineer" class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 focus:border-forest focus:ring-1 focus:ring-forest text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-charcoal/70 mb-1">Target Move-in Date</label>
+                    <input type="date" id="modal-date" required class="w-full px-4 py-2.5 rounded-xl border border-charcoal/20 focus:border-forest focus:ring-1 focus:ring-forest text-sm">
+                </div>
+                <button type="submit" class="w-full bg-forest text-gold font-bold py-3 rounded-xl uppercase tracking-wider text-xs hover:bg-gold hover:text-forest transition-all shadow-lg mt-2">
+                    Submit & Send Reservation Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Seat Plan Floating Toast Notification -->
+    <div id="seat-toast" class="fixed bottom-24 right-4 sm:right-8 z-50 hidden bg-forest text-gold px-5 py-3.5 rounded-2xl shadow-2xl border border-gold/30 flex items-center gap-3 max-w-md transition-all duration-300 slide-up-fade">
+        <i data-lucide="bell" class="w-5 h-5 text-gold flex-shrink-0"></i>
+        <span id="seat-toast-msg" class="text-xs font-semibold text-white"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-forest text-white py-12 border-t border-gold/20 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 w-auto">
+                <div>
+                    <span class="font-serif text-lg font-bold">Green House Hostel</span>
+                    <p class="text-xs text-offwhite/60">Hostel 1 (Boys) - Diabari, Uttara, Dhaka</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-xs uppercase tracking-widest text-offwhite/70">
+                <a href="index.html" class="hover:text-gold">Home</a>
+                <a href="hostel-1-boys.html" class="hover:text-gold">Hostel 1 Info</a>
+                <button onclick="window.GHH_AUTH.openModal('login')" class="hover:text-gold flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> Member Sign In</button>
+            </div>
+            <p class="text-xs text-offwhite/40">&copy; 2026 Green House Hostel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Helper function for ordinal floor names (2nd, 3rd, 4th, 5th, 6th, 7th)
+        function getOrdinalFloor(f) {
+            const ordinals = { 2: '2nd Floor', 3: '3rd Floor', 4: '4th Floor', 5: '5th Floor', 6: '6th Floor', 7: '7th Floor' };
+            return ordinals[f] || `${f}th Floor`;
+        }
+
+        // Base room templates according to Price per seat and room.txt
+        const BASE_ROOM_TEMPLATES = [
+            { num: 1, seatsCount: 1, rent: 12500, desc: 'Single Seat Private Room' },
+            { num: 2, seatsCount: 1, rent: 11000, desc: 'Single Seat Standard Room' },
+            { num: 3, seatsCount: 3, rent: 11000, desc: 'Triple Seat Room' },
+            { num: 4, seatsCount: 2, rent: 12500, desc: 'Double Seat Deluxe Room' },
+            { num: 5, seatsCount: 2, rent: 11000, desc: 'Double Seat Standard Room' },
+            { num: 6, seatsCount: 2, rent: 10500, desc: 'Double Seat Economy Room' },
+            { num: 7, seatsCount: 1, rent: 13500, desc: 'Single Seat Executive Room' },
+            { num: 8, seatsCount: 1, rent: 9500,  desc: 'Single Seat Budget Room' },
+            { num: 9, seatsCount: 2, rent: 13500, desc: 'Double Seat Deluxe Room' },
+            { num: 10, seatsCount: 2, rent: 12500, desc: 'Double Seat Premium Room' }
+        ];
+
+        // Returns exact rooms for specified floor (e.g. 201-209, 301-310, 701-704)
+        function getRoomsForFloor(floorNumber) {
+            if (floorNumber === 2) {
+                return [
+                    { id: 201, name: '201', seatsCount: 1, rent: 12500, desc: 'Single Seat Private Room' },
+                    { id: 202, name: '202', seatsCount: 1, rent: 11000, desc: 'Single Seat Standard Room' },
+                    { id: 203, name: '203', seatsCount: 3, rent: 11000, desc: 'Triple Seat Room' },
+                    { id: 204, name: '204', seatsCount: 2, rent: 12500, desc: 'Double Seat Deluxe Room' },
+                    { id: 205, name: '205', seatsCount: 1, rent: 12000, desc: 'Single Seat Premium Room' },
+                    { id: 206, name: '206', seatsCount: 1, rent: 12000, desc: 'Single Seat Premium Room' },
+                    { id: 208, name: '208', seatsCount: 1, rent: 9500, desc: 'Single Seat Budget Room' },
+                    { id: 209, name: '209', seatsCount: 2, rent: 13500, desc: 'Double Seat Executive Room' },
+                    { id: 210, name: '210', seatsCount: 2, rent: 12500, desc: 'Double Seat Premium Room' }
+                ];
+            } else if (floorNumber === 7) {
+                return [
+                    { id: 701, name: '701', seatsCount: 3, rent: 9500, desc: 'Triple Seat Room' },
+                    { id: 702, name: '702', seatsCount: 1, rent: 7500, desc: 'Single Seat Budget Room' },
+                    { id: 703, name: '703', seatsCount: 3, rent: 8500, desc: 'Triple Seat Economy Room' },
+                    { id: 704, name: '704', seatsCount: 3, rent: 8500, desc: 'Triple Seat Economy Room' }
+                ];
+            }
+
+            let count = 10;
+            return BASE_ROOM_TEMPLATES.slice(0, count).map(tpl => {
+                const roomCode = floorNumber * 100 + tpl.num; // e.g. 301, 305
+                return {
+                    id: roomCode,
+                    name: `${roomCode}`,
+                    seatsCount: tpl.seatsCount,
+                    rent: tpl.rent,
+                    desc: tpl.desc
+                };
+            });
+        }
+
+        const FLOORS = [2, 3, 4, 5, 6, 7];
+        const LOCAL_STORAGE_KEY = 'ghh_hostel1_public_seats';
+
+        // Initial default seat state fallback
+        function getDefaultState() {
+            const state = {};
+            FLOORS.forEach(floor => {
+                state[floor] = {};
+                const rooms = getRoomsForFloor(floor);
+                rooms.forEach(room => {
+                    state[floor][room.id] = {};
+                    for (let s = 1; s <= room.seatsCount; s++) {
+                        const seatLetter = String.fromCharCode(64 + s);
+                        state[floor][room.id][seatLetter] = 'available';
+                    }
+                });
+            });
+            return state;
+        }
+
+        // Robust parser that handles both wrapped { state: {...} } and direct floor state objects
+        function parseSeatState(data) {
+            if (!data) return null;
+            try {
+                let parsed = (typeof data === 'string') ? JSON.parse(data) : data;
+                if (!parsed || typeof parsed !== 'object') return null;
+
+                // If wrapped in { state: {...}, occupants: {...} }, extract state
+                let stateObj = (parsed.state && typeof parsed.state === 'object') ? parsed.state : parsed;
+
+                // Build a complete normalized state ensuring every floor, room, and bed exists
+                const normalized = {};
+                FLOORS.forEach(floor => {
+                    const floorKey = String(floor);
+                    const sourceFloor = stateObj[floor] || stateObj[floorKey] || {};
+                    normalized[floor] = {};
+
+                    const rooms = getRoomsForFloor(floor);
+                    rooms.forEach(room => {
+                        const roomKey = String(room.id);
+                        const sourceRoom = sourceFloor[room.id] || sourceFloor[roomKey] || {};
+                        normalized[floor][room.id] = {};
+
+                        for (let s = 1; s <= room.seatsCount; s++) {
+                            const letter = String.fromCharCode(64 + s);
+                            const rawStatus = sourceRoom[letter];
+                            // Explicit check for booked status
+                            if (rawStatus === 'booked') {
+                                normalized[floor][room.id][letter] = 'booked';
+                            } else {
+                                normalized[floor][room.id][letter] = 'available';
+                            }
+                        }
+                    });
+                });
+
+                return normalized;
+            } catch(e) {
+                console.warn("Error parsing seat state:", e);
+                return null;
+            }
+        }
+
+        function loadSeatState() {
+            const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (saved) {
+                const parsed = parseSeatState(saved);
+                if (parsed) return parsed;
+            }
+            return getDefaultState();
+        }
+
+        let currentSeatState = loadSeatState();
+        let activeFloor = 2;
+        let activeFilter = 'all'; // 'all' | '1' | '2' | '3'
+        let selectedSeatInfo = null; // { floor, roomId, roomName, seatLetter, rent, seatsCount }
+
+        function showSeatToast(msg) {
+            const toast = document.getElementById('seat-toast');
+            const toastMsg = document.getElementById('seat-toast-msg');
+            if (toast && toastMsg) {
+                toastMsg.textContent = msg;
+                toast.classList.remove('hidden');
+                if (window.lucide) lucide.createIcons();
+                if (window._seatToastTimer) clearTimeout(window._seatToastTimer);
+                window._seatToastTimer = setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 4000);
+            }
+        }
+
+        let lastSyncedStateString = '';
+        let isSyncing = false;
+
+        // Fetch latest state from server REST API or static fallback with cache-busting
+        async function syncSeatStateFromServer() {
+            if (isSyncing) return;
+            isSyncing = true;
+            try {
+                const timestamp = Date.now();
+                let data = null;
+
+                try {
+                    const resp = await fetch(`/api/seats?_t=${timestamp}`, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache'
+                        }
+                    });
+                    if (resp.ok) {
+                        data = await resp.json();
+                    }
+                } catch(netErr) {
+                    // API endpoint might be offline or file served via static server
+                }
+
+                // Fallback to static seat_state.json if API returned non-ok or failed
+                if (!data) {
+                    try {
+                        const staticResp = await fetch(`seat_state.json?_t=${timestamp}`, {
+                            cache: 'no-store',
+                            headers: {
+                                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                                'Pragma': 'no-cache'
+                            }
+                        });
+                        if (staticResp.ok) {
+                            data = await staticResp.json();
+                        }
+                    } catch(staticErr) {}
+                }
+
+                if (data) {
+                    const dataStr = JSON.stringify(data);
+                    if (dataStr !== lastSyncedStateString) {
+                        const parsed = parseSeatState(data);
+                        if (parsed) {
+                            currentSeatState = parsed;
+                            lastSyncedStateString = dataStr;
+                            localStorage.setItem(LOCAL_STORAGE_KEY, dataStr);
+
+                            // Check if currently selected seat became booked
+                            if (selectedSeatInfo) {
+                                const sFloor = selectedSeatInfo.floor;
+                                const sRoom = selectedSeatInfo.roomId;
+                                const sLetter = selectedSeatInfo.seatLetter;
+                                const fData = currentSeatState[sFloor] || currentSeatState[String(sFloor)] || {};
+                                const rData = fData[sRoom] || fData[String(sRoom)] || {};
+                                if (rData[sLetter] === 'booked') {
+                                    selectedSeatInfo = null;
+                                    showSeatToast(`Room ${sRoom} Bed ${sLetter} was just reserved by admin.`);
+                                }
+                            }
+
+                            renderRoomGrid();
+                            updateBookingSummary();
+                        }
+                    }
+
+                    const syncBadge = document.getElementById('live-sync-indicator');
+                    if (syncBadge) {
+                        syncBadge.classList.remove('opacity-40');
+                        syncBadge.title = "Connected: Real-time seat updates active";
+                    }
+                }
+            } catch(e) {
+                // Network error, local storage remains active
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        // Unified Seat Selection Handler
+        function handleSeatSelection(floor, roomId, letter) {
+            const rooms = getRoomsForFloor(floor);
+            const room = rooms.find(r => r.id === roomId);
+            if (!room) return;
+
+            if (selectedSeatInfo && selectedSeatInfo.floor === floor && selectedSeatInfo.roomId === roomId && selectedSeatInfo.seatLetter === letter) {
+                // Toggle off / deselect
+                selectedSeatInfo = null;
+            } else {
+                // Select new bed
+                selectedSeatInfo = {
+                    floor: floor,
+                    roomId: roomId,
+                    roomName: room.name,
+                    seatLetter: letter,
+                    rent: room.rent,
+                    seatsCount: room.seatsCount
+                };
+            }
+
+            renderRoomGrid();
+            updateBookingSummary();
+        }
+
+        // Render Room & Seat Grid for Active Floor with Category Filtering
+        function renderRoomGrid() {
+            const container = document.getElementById('room-grid');
+            container.innerHTML = '';
+
+            const floorData = currentSeatState[activeFloor] || currentSeatState[String(activeFloor)] || {};
+            const rooms = getRoomsForFloor(activeFloor);
+
+            let availCount = 0;
+            let bookedCount = 0;
+
+            // Calculate overall floor stats
+            rooms.forEach(room => {
+                const roomData = floorData[room.id] || floorData[String(room.id)] || {};
+                for (let s = 1; s <= room.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    const status = (roomData && roomData[letter]) ? roomData[letter] : 'available';
+                    if (status === 'booked') bookedCount++;
+                    else availCount++;
+                }
+            });
+
+            // Filter rooms based on active category pill
+            const filteredRooms = rooms.filter(room => {
+                if (activeFilter === 'all') return true;
+                return room.seatsCount === parseInt(activeFilter);
+            });
+
+            if (filteredRooms.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-12 rounded-[24px] border border-charcoal/10 text-center shadow-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-sand text-forest flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="bed" class="w-7 h-7"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-xl text-forest mb-1">No matching rooms on this floor</h4>
+                        <p class="text-xs text-charcoal/60 max-w-sm mx-auto mb-4">This floor does not have ${activeFilter}-bed rooms. Try another filter or floor.</p>
+                        <button onclick="resetRoomFilter()" class="bg-forest text-gold px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-forest transition-all shadow-sm">
+                            Show All Rooms
+                        </button>
+                    </div>
+                `;
+                lucide.createIcons();
+                document.getElementById('floor-stat-avail').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> ${availCount} Available`;
+                document.getElementById('floor-stat-booked').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> ${bookedCount} Booked`;
+                return;
+            }
+
+            filteredRooms.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.className = 'bg-white p-6 rounded-[24px] border border-charcoal/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden fade-in';
+
+                const roomData = floorData[room.id] || floorData[String(room.id)] || {};
+                let seatsHtml = '';
+                let roomAvailCount = 0;
+                let roomBookedCount = 0;
+
+                for (let s = 1; s <= room.seatsCount; s++) {
+                    const letter = String.fromCharCode(64 + s);
+                    const status = (roomData && roomData[letter]) ? roomData[letter] : 'available';
+                    const isBooked = (status === 'booked');
+
+                    if (isBooked) roomBookedCount++;
+                    else roomAvailCount++;
+
+                    const isSelected = selectedSeatInfo && 
+                                       selectedSeatInfo.floor === activeFloor && 
+                                       selectedSeatInfo.roomId === room.id && 
+                                       selectedSeatInfo.seatLetter === letter;
+
+                    // Button style tokens: Green for Available, Rose Red for Booked, Gold for Selected
+                    let btnClass = 'seat-btn available bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-600 hover:text-white cursor-pointer';
+                    let statusLabel = 'Available';
+                    let iconHtml = '<i data-lucide="bed" class="w-4 h-4"></i>';
+                    let disabledAttr = '';
+
+                    if (isBooked) {
+                        btnClass = 'bg-rose-50 text-rose-800 border-rose-300 ring-1 ring-rose-200 cursor-not-allowed opacity-90 shadow-none';
+                        statusLabel = 'Not Available';
+                        iconHtml = '<i data-lucide="lock" class="w-4 h-4 text-rose-600"></i>';
+                        disabledAttr = 'disabled';
+                    } else if (isSelected) {
+                        btnClass = 'seat-btn selected bg-gold text-forest font-bold border-amber-600 shadow-lg ring-2 ring-gold/50 cursor-pointer';
+                        statusLabel = 'Selected';
+                        iconHtml = '<i data-lucide="check" class="w-4 h-4 text-forest"></i>';
+                    }
+
+                    seatsHtml += `
+                        <button ${disabledAttr} 
+                            data-room="${room.id}" 
+                            data-seat="${letter}"
+                            aria-label="Room ${room.name} Bed ${letter} - ${statusLabel}"
+                            class="flex-1 py-3 px-2 min-h-[54px] rounded-2xl border flex flex-col items-center justify-center gap-1 transition-all ${btnClass}">
+                            <div class="flex items-center gap-1">
+                                ${iconHtml}
+                                <span class="text-xs font-bold">Bed ${letter}</span>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-wider font-extrabold flex items-center gap-1">
+                                ${isBooked ? '<span class="w-1.5 h-1.5 rounded-full bg-rose-600 inline-block"></span>' : ''}
+                                ${statusLabel}
+                            </span>
+                        </button>
+                    `;
+                }
+
+                // Room status badge in header
+                let roomBadge = '';
+                if (roomBookedCount === room.seatsCount) {
+                    roomBadge = `<span class="text-[10px] font-bold uppercase bg-rose-100 text-rose-800 border border-rose-200 px-2.5 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="lock" class="w-3 h-3"></i> Fully Booked</span>`;
+                } else if (roomBookedCount > 0) {
+                    roomBadge = `<span class="text-[10px] font-bold uppercase bg-amber-100 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> ${roomAvailCount} Bed Left</span>`;
+                } else {
+                    roomBadge = `<span class="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> Available</span>`;
+                }
+
+                roomCard.innerHTML = `
+                    <div class="flex items-center justify-between mb-4 border-b border-charcoal/5 pb-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-serif font-bold text-2xl text-forest">Room ${room.name}</h4>
+                                <span class="text-[10px] font-bold uppercase bg-forest/5 text-forest px-2 py-0.5 rounded-md">${room.seatsCount} Bed</span>
+                                ${roomBadge}
+                            </div>
+                            <p class="text-xs text-charcoal/60 font-light mt-1">${room.desc}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-mono font-bold text-lg text-gold">${room.rent.toLocaleString()} TK</span>
+                            <div class="text-[10px] text-charcoal/50 uppercase font-semibold mt-0.5">Monthly Rent</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 mt-4">
+                        ${seatsHtml}
+                    </div>
+                `;
+
+                container.appendChild(roomCard);
+            });
+
+            // Update Floor stats
+            document.getElementById('floor-stat-avail').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> ${availCount} Available`;
+            document.getElementById('floor-stat-booked').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> ${bookedCount} Booked`;
+
+            lucide.createIcons();
+            attachRoomGridClickEvents();
+        }
+
+        function resetRoomFilter() {
+            activeFilter = 'all';
+            document.querySelectorAll('#room-filter-pills .room-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === 'all') {
+                    btn.className = 'room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-sm';
+                } else {
+                    btn.className = 'room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10';
+                }
+            });
+            renderRoomGrid();
+        }
+
+        // Room Category Filter Click Listeners
+        document.querySelectorAll('#room-filter-pills .room-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#room-filter-pills .room-filter-btn').forEach(b => {
+                    b.className = 'room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-sand text-charcoal hover:bg-forest/10 border border-charcoal/10';
+                });
+                btn.className = 'room-filter-btn px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all bg-forest text-gold shadow-sm';
+
+                activeFilter = btn.getAttribute('data-filter');
+                renderRoomGrid();
+            });
+        });
+
+        function attachRoomGridClickEvents() {
+            document.querySelectorAll('#room-grid .seat-btn.available, #room-grid .seat-btn.selected').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const roomId = parseInt(btn.getAttribute('data-room'));
+                    const letter = btn.getAttribute('data-seat');
+                    handleSeatSelection(activeFloor, roomId, letter);
+                });
+            });
+        }
+
+        // Update Summary Sidebar
+        function updateBookingSummary() {
+            const floorEl = document.getElementById('summary-floor');
+            const seatEl = document.getElementById('summary-seat');
+            const typeEl = document.getElementById('summary-room-type');
+            const rentEl = document.getElementById('summary-rent');
+            const serviceEl = document.getElementById('summary-service');
+            const waBtn = document.getElementById('reserve-wa-btn');
+            const modalBtn = document.getElementById('reserve-modal-btn');
+
+            floorEl.textContent = getOrdinalFloor(activeFloor);
+
+            if (!selectedSeatInfo) {
+                seatEl.textContent = 'None Selected';
+                typeEl.textContent = '-';
+                rentEl.textContent = '0 BDT';
+                serviceEl.textContent = '3,500 BDT';
+                waBtn.disabled = true;
+                modalBtn.disabled = true;
+                return;
+            }
+
+            seatEl.textContent = `Room ${selectedSeatInfo.roomName} - Bed ${selectedSeatInfo.seatLetter}`;
+            typeEl.textContent = `${selectedSeatInfo.seatsCount} Bed Room`;
+            rentEl.textContent = `${selectedSeatInfo.rent.toLocaleString()} BDT / mo`;
+            serviceEl.textContent = '3,500 BDT / yr';
+            waBtn.disabled = false;
+            modalBtn.disabled = false;
+        }
+
+        // Setup Floor Selector Buttons
+        document.querySelectorAll('#floor-selector .floor-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#floor-selector .floor-btn').forEach(b => {
+                    b.className = 'floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-white text-charcoal hover:bg-forest/10 border border-charcoal/10';
+                });
+                btn.className = 'floor-btn px-4 py-2 rounded-xl font-bold text-sm tracking-wider uppercase transition-all bg-forest text-gold shadow-md';
+
+                activeFloor = parseInt(btn.getAttribute('data-floor'));
+                selectedSeatInfo = null; // reset selection on floor switch
+                
+                const ordinalName = getOrdinalFloor(activeFloor);
+                document.getElementById('current-floor-heading').textContent = `${ordinalName} Layout`;
+
+                renderRoomGrid();
+                updateBookingSummary();
+                lucide.createIcons();
+            });
+        });
+
+        // WhatsApp Booking Trigger
+        document.getElementById('reserve-wa-btn').addEventListener('click', () => {
+            if (!selectedSeatInfo) return;
+            const floorText = getOrdinalFloor(activeFloor);
+            const msg = `Hello Green House Hostel! I want to reserve Seat ${selectedSeatInfo.seatLetter} in Room ${selectedSeatInfo.roomName} on the ${floorText} of Hostel 1 (Boys). Monthly Rent: ${selectedSeatInfo.rent.toLocaleString()} TK.`;
+            const url = `https://wa.me/8801703585853?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        });
+
+        // Online Booking Modal
+        const modal = document.getElementById('booking-modal');
+        document.getElementById('reserve-modal-btn').addEventListener('click', () => {
+            if (!selectedSeatInfo) return;
+            const floorText = getOrdinalFloor(activeFloor);
+            document.getElementById('modal-seat-name').textContent = `Room ${selectedSeatInfo.roomName} - Bed ${selectedSeatInfo.seatLetter} (${floorText})`;
+            document.getElementById('modal-seat-rent').textContent = `${selectedSeatInfo.rent.toLocaleString()} BDT / month`;
+            
+            // Auto-fill user details if logged in
+            const authUser = window.GHH_AUTH ? window.GHH_AUTH.getUser() : null;
+            if (authUser) {
+                if (authUser.name && !document.getElementById('modal-name').value) {
+                    document.getElementById('modal-name').value = authUser.name;
+                }
+                if (authUser.phone && !document.getElementById('modal-phone').value) {
+                    document.getElementById('modal-phone').value = authUser.phone;
+                }
+            }
+
+            modal.classList.remove('hidden');
+        });
+        document.getElementById('close-modal-btn').addEventListener('click', () => modal.classList.add('hidden'));
+
+        document.getElementById('booking-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('modal-name').value.trim();
+            const phone = document.getElementById('modal-phone').value.trim();
+            const profession = document.getElementById('modal-profession').value.trim();
+            const date = document.getElementById('modal-date').value;
+            const floorText = getOrdinalFloor(activeFloor);
+            
+            const professionLine = profession ? `\nInstitution/Profession: ${profession}` : '';
+            const msg = `*NEW ONLINE RESERVATION REQUEST*\nBranch: Hostel 1 (Boys)\nSeat: Room ${selectedSeatInfo.roomName} - Bed ${selectedSeatInfo.seatLetter} (${floorText})\nName: ${name}\nPhone: ${phone}${professionLine}\nTarget Date: ${date}`;
+            const url = `https://wa.me/8801703585853?text=${encodeURIComponent(msg)}`;
+            modal.classList.add('hidden');
+            window.open(url, '_blank');
+        });
+
+        // Mobile Drawer Toggle
+        const drawerToggle = document.getElementById('mobile-drawer-toggle');
+        const drawerClose = document.getElementById('mobile-drawer-close');
+        const drawerBackdrop = document.getElementById('drawer-backdrop');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+
+        function openDrawer() {
+            mobileDrawer.classList.add('open');
+            drawerBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            mobileDrawer.classList.remove('open');
+            drawerBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (drawerToggle) drawerToggle.addEventListener('click', openDrawer);
+        if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+        // Instant BroadcastChannel synchronization from Admin Panel
+        if (typeof BroadcastChannel !== 'undefined') {
+            try {
+                const syncChannel = new BroadcastChannel('ghh_seat_sync');
+                syncChannel.onmessage = (event) => {
+                    if (event.data && event.data.data) {
+                        const parsed = parseSeatState(event.data.data);
+                        if (parsed) {
+                            currentSeatState = parsed;
+                            renderRoomGrid();
+                            updateBookingSummary();
+                        }
+                    }
+                };
+            } catch(e) {}
+        }
+
+        // Listen for live updates from Admin Panel via localStorage
+        window.addEventListener('storage', (e) => {
+            if (e.key === LOCAL_STORAGE_KEY && e.newValue) {
+                const parsed = parseSeatState(e.newValue);
+                if (parsed) {
+                    currentSeatState = parsed;
+                    renderRoomGrid();
+                    updateBookingSummary();
+                }
+            }
+        });
+
+        // Re-check state whenever user switches back to this tab or window receives focus
+        window.addEventListener('focus', () => {
+            syncSeatStateFromServer();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                syncSeatStateFromServer();
+            }
+        });
+
+        window.addEventListener('online', () => {
+            syncSeatStateFromServer();
+        });
+
+        // Auto-poll server every 2 seconds for real-time mobile sync across devices
+        const pollInterval = setInterval(() => {
+            if (!document.hidden) {
+                syncSeatStateFromServer();
+            }
+        }, 2000);
+
+        // Initialize on page load
+        renderRoomGrid();
+        updateBookingSummary();
+        lucide.createIcons();
+        syncSeatStateFromServer();
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20am%20interested%20in%20booking%20a%20seat%20from%20the%20Live%20Seat%20Plan.%20Please%20guide%20me." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl wa-float z-40 flex items-center justify-center">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
+</body>
+</html>

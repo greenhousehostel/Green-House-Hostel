@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sister Hostels (1 Boys & 2 Girls) at Mirpur 10 - Green House Hostel. Affordable, high quality student accommodation near BCS Confidence Coaching centre.">
+    <title>Sister Hostels (Mirpur 10) - Green House Hostel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0F2C22',
+                        sage: '#5E846A',
+                        gold: '#DFB15B',
+                        cream: '#FDFBF7',
+                        sand: '#F5EFE4',
+                        charcoal: '#1C2B24',
+                        offwhite: '#E2ECE9',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css?v=12">
+    <script src="theme-toggle.js"></script>
+    <script src="auth.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased selection:bg-gold selection:text-forest flex flex-col min-h-screen">
+
+    <!-- Sticky Frosted Navbar -->
+    <nav id="navbar" class="fixed w-full z-40 py-4 transition-all duration-300 bg-forest/95 backdrop-blur-md border-b border-gold/20 text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between w-full">
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 sm:h-12 w-auto transition-all duration-300">
+                <span class="text-white font-serif text-xl sm:text-2xl font-bold tracking-wide">Green House</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-white/90 font-medium text-xs tracking-widest uppercase">
+                <a href="index.html" class="hover:text-gold transition-colors">Home</a>
+                <a href="index.html#locations" class="hover:text-gold transition-colors">Branches</a>
+                <a href="seat-plan.html" class="hover:text-gold transition-colors flex items-center gap-1">
+                    <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Seat Plan
+                </a>
+                <a href="index.html#dining" class="hover:text-gold transition-colors">Menu & Rules</a>
+            </div>
+
+            <div class="flex items-center gap-2.5 shrink-0">
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn w-11 h-11 min-w-[44px] min-h-[44px] rounded-full text-gold bg-white/10 hover:bg-gold hover:text-forest transition-all flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+                <div id="auth-nav-slot"></div>
+                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20would%20like%20to%20inquire%20about%20Sister%20Hostels%20%281%20Boys%20%26%202%20Girls%29%20at%20Mirpur%2010." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex bg-gold text-forest px-4 sm:px-5 py-2 min-h-[44px] rounded-full text-xs font-bold uppercase tracking-wider hover:bg-white transition-all shadow-md items-center">
+                    Book Now
+                </a>
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-drawer-toggle" aria-label="Open Navigation Menu" class="md:hidden text-white w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/10 hover:bg-gold hover:text-forest transition-colors flex items-center justify-center">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer & Backdrop -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"></div>
+    <aside id="mobile-drawer" class="fixed top-0 right-0 w-[280px] sm:w-[320px] h-full bg-forest text-white z-50 p-6 flex flex-col justify-between shadow-2xl border-l border-gold/20">
+        <div>
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-2.5">
+                    <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-9 w-auto">
+                    <span class="font-serif font-bold text-lg text-white">Green House</span>
+                </div>
+                <button id="mobile-drawer-close" aria-label="Close Navigation Menu" class="w-11 h-11 min-w-[44px] min-h-[44px] text-white/70 hover:text-gold rounded-lg flex items-center justify-center">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-4 text-sm font-medium uppercase tracking-widest">
+                <a href="index.html" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Home</a>
+                <a href="index.html#locations" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Our Branches</a>
+                <a href="seat-plan.html" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 flex items-center gap-2">
+                    <i data-lucide="layout-grid" class="w-4 h-4 text-gold"></i> Live Seat Plan (Hostel 1)
+                </a>
+                <a href="index.html#menu" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Weekly Menu & Rules</a>
+                <a href="admin.html" class="block py-2 text-xs text-gold/80 hover:text-gold flex items-center gap-1.5 pt-2">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Portal
+                </a>
+            </nav>
+        </div>
+
+        <div class="space-y-3 pt-6 border-t border-white/10">
+            <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20would%20like%20to%20inquire%20about%20Sister%20Hostels%20at%20Mirpur%2010." target="_blank" rel="noopener noreferrer" class="w-full bg-gold text-forest py-3 rounded-xl font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-lg">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Book via WhatsApp
+            </a>
+            <div class="text-center text-[10px] text-offwhite/50 tracking-wider">
+                Sister Hostels • Mirpur 10, Dhaka
+            </div>
+        </div>
+    </aside>
+
+    <!-- Header / Hero Section -->
+    <section class="pt-32 pb-16 bg-forest text-white border-b border-gold/20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <div class="inline-flex items-center gap-2 bg-gold/15 text-gold px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-gold/30 mb-4">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> Dual Wing Accommodation
+                </div>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Sister Hostels (Mirpur 10)</h1>
+                <p class="text-offwhite opacity-90 leading-relaxed mb-6 text-base">
+                    Affordable, secure, and fully maintained accommodations for students and job candidates. Located at Mirpur 10, Fol-potti, Near BCS Confidence Coaching Centre.
+                </p>
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-bold uppercase tracking-wider">
+                    <span class="bg-white/10 px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/5"><i data-lucide="shield-check" class="w-4 h-4 text-gold"></i> Strict Security</span>
+                    <span class="bg-white/10 px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/5"><i data-lucide="wifi" class="w-4 h-4 text-gold"></i> Fast Wi-Fi</span>
+                    <span class="bg-white/10 px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/5"><i data-lucide="sparkles" class="w-4 h-4 text-gold"></i> Clean Rooms</span>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2">
+                <img src="./images/sister_hostels.png" alt="Sister Hostels Room" class="rounded-3xl shadow-2xl border-4 border-white/10 w-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="py-24 bg-sand flex-grow">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-2">Pricing Plans</h4>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-forest">Accommodation Packages</h2>
+                <p class="text-charcoal/60 text-sm max-w-xl mx-auto mt-2">Affordable student packages including 3 daily nutritious meals, high-speed Wi-Fi, electricity, and water.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+                <!-- Sister Hostel 1 Boys -->
+                <div class="bg-white p-8 sm:p-10 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-charcoal/10 flex flex-col hover-card relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-sage"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider bg-forest text-gold px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5">
+                            <i data-lucide="user" class="w-3.5 h-3.5"></i> Boys Wing
+                        </span>
+                        <span class="text-xs bg-forest/5 text-forest font-bold px-2.5 py-0.5 rounded-lg">4 Beds</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-serif font-bold text-forest mb-1">Sister Hostel 1 Boys</h3>
+                    <div class="text-xs text-charcoal/60 uppercase tracking-wider font-semibold mb-6">Non-AC Package A (4-Seat Quad Room)</div>
+                    <div class="text-4xl font-serif font-bold text-forest mb-1">7,500<span class="text-lg font-sans text-charcoal/50"> tk/mo</span></div>
+                    <div class="text-xs text-charcoal/50 mb-6">+ 3,500 tk annual service charge</div>
+                    
+                    <ul class="space-y-4 text-sm text-charcoal/80 mb-8 flex-grow">
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> 4 Seats Shared Room</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> 30 days of daily meals included</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> Wi-Fi, electricity & water included</li>
+                    </ul>
+                    
+                    <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20want%20to%20book%20a%20seat%20at%20Sister%20Hostel%201%20Boys%20%28Mirpur%2010%2C%207%2C500%20TK%29." target="_blank" rel="noopener noreferrer" class="w-full text-center bg-forest text-gold py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-forest transition-all shadow-md flex items-center justify-center gap-1.5">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> Book Boys Wing
+                    </a>
+                </div>
+                
+                <!-- Sister Hostel 2 Girls -->
+                <div class="bg-white p-8 sm:p-10 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gold/40 flex flex-col hover-card relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gold"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider bg-gold text-forest px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5">
+                            <i data-lucide="user-check" class="w-3.5 h-3.5"></i> Girls Wing
+                        </span>
+                        <span class="text-xs bg-forest/5 text-forest font-bold px-2.5 py-0.5 rounded-lg">4 Beds</span>
+                    </div>
+
+                    <h3 class="text-2xl font-serif font-bold text-forest mb-1">Sister Hostel 2 Girls</h3>
+                    <div class="text-xs text-charcoal/60 uppercase tracking-wider font-semibold mb-6">Non-AC Package A (4-Seat Quad Room)</div>
+                    <div class="text-4xl font-serif font-bold text-forest mb-1">7,500<span class="text-lg font-sans text-charcoal/50"> tk/mo</span></div>
+                    <div class="text-xs text-charcoal/50 mb-6">+ 3,500 tk annual service charge</div>
+                    
+                    <ul class="space-y-4 text-sm text-charcoal/80 mb-8 flex-grow">
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> 4 Seats Shared Room</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> 30 days of daily meals included</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i> Dedicated security & Wi-Fi</li>
+                    </ul>
+
+                    <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20want%20to%20book%20a%20seat%20at%20Sister%20Hostel%202%20Girls%20%28Mirpur%2010%2C%207%2C500%20TK%29." target="_blank" rel="noopener noreferrer" class="w-full text-center bg-gold text-forest py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-forest hover:text-white transition-all shadow-md flex items-center justify-center gap-1.5">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> Book Girls Wing
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-14 text-center">
+                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20want%20to%20inquire%20about%20Sister%20Hostels%20%28Mirpur%2010%29%20branch." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-gold text-forest px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-forest hover:text-white transition-all shadow-xl">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    Chat on WhatsApp for Mirpur 10 Branch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section class="py-24 bg-cream border-t border-charcoal/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2">
+                    <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-2">Location</h4>
+                    <h2 class="text-4xl font-serif font-bold text-forest mb-6">Find Us Here</h2>
+                    <p class="text-charcoal/70 leading-relaxed mb-8 text-base">
+                        Green House Hostel, Mirpur 10, Fol-potti, Near BCS Confidence Coaching Centre, Dhaka.
+                    </p>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-2xl bg-forest text-gold flex items-center justify-center shadow-md">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs uppercase tracking-widest text-charcoal/50 font-bold">Direct Front Desk Hotline</div>
+                            <div class="text-2xl font-bold text-forest">+880 1703-585853</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <div class="rounded-3xl overflow-hidden shadow-xl border border-charcoal/10 bg-white p-10 text-center flex flex-col items-center justify-center h-full">
+                        <div class="w-16 h-16 bg-forest text-gold rounded-2xl flex items-center justify-center mb-6 shadow-md">
+                            <i data-lucide="map-pin" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-forest mb-2">Mirpur 10 Hub</h3>
+                        <p class="text-charcoal/70 text-sm max-w-md">Conveniently situated right near the BCS Confidence Coaching centre and metro stations, ideal for students and professionals in Mirpur.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-forest pt-16 pb-28 md:pb-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 w-auto">
+                        <span class="text-white font-serif text-lg sm:text-2xl font-bold tracking-wide sm:tracking-widest">Green House</span>
+                    </div>
+                    <p class="text-offwhite opacity-80 text-sm leading-relaxed max-w-sm mb-6">
+                        A premium hostel brand dedicated to providing secure, comfortable, and study-friendly accommodations.
+                    </p>
+                    <div class="flex items-center gap-4 text-white">
+                        <a href="https://www.facebook.com/share/1D7kcvSGGa/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.597 1.323-1.324V1.325C24 .597 23.403 0 22.675 0z"/></svg></a>
+                        <a href="https://www.youtube.com/@GreenHouseHostel4u" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                        <a href="mailto:greenhouse5014@gmail.com" aria-label="Email" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-gold font-bold uppercase tracking-widest text-sm mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-offwhite opacity-80 text-sm">
+                        <li><a href="index.html" class="hover:text-gold transition-colors">Home</a></li>
+                        <li><a href="index.html#locations" class="hover:text-gold transition-colors">Our Branches</a></li>
+                        <li><a href="seat-plan.html" class="hover:text-gold transition-colors">Live Seat Plan</a></li>
+                        <li><a href="index.html#dining" class="hover:text-gold transition-colors">Weekly Menu</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-gold font-bold uppercase tracking-widest text-sm mb-6">Contact Us</h4>
+                    <ul class="space-y-4 text-offwhite opacity-80 text-sm sm:text-base">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-gold shrink-0"></i>
+                            <span>+880 1703-585853</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-gold shrink-0"></i>
+                            <span class="break-all">greenhouse5014@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-offwhite opacity-60">
+                <p>&copy; 2026 Green House Hostel. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed for Premium Comfort.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Master Floating WhatsApp Button -->
+    <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20am%20interested%20in%20booking%20a%20seat%20at%20Sister%20Hostels%20Mirpur.%20Please%20share%20more%20details." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl wa-float z-40 flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- Scripts: Lucide Icons, Navbar Scroll, Mobile Drawer -->
+    <script>
+        lucide.createIcons();
+        
+        // Sticky Frosted Navbar Scroll Listener
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Drawer Toggle
+        const drawerToggle = document.getElementById('mobile-drawer-toggle');
+        const drawerClose = document.getElementById('mobile-drawer-close');
+        const drawerBackdrop = document.getElementById('drawer-backdrop');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+
+        function openDrawer() {
+            mobileDrawer.classList.add('open');
+            drawerBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            mobileDrawer.classList.remove('open');
+            drawerBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (drawerToggle) drawerToggle.addEventListener('click', openDrawer);
+        if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+        // Intersection Observer for Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

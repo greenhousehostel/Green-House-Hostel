@@ -1,0 +1,35 @@
+﻿System Instructions: Generate a multi-page informational website for a premium hostel brand.
+Architecture Overview: The website requires 5 total pages:
+1. index.html (The Main Hub / Homepage)
+2. hostel-1-boys.html
+3. hostel-2-girls.html
+4. hostel-3-boys.html
+5. sister-hostels-combined.html (Holds information for Sister Hostel 1 and Sister Hostel 2 on a single page)
+Design Tokens & Theme Setup: Configure Tailwind to use the following exact hex codes:
+* Deep Forest Green: #0F2C22 (Hero overlays, Mission/Footer backgrounds)
+* Sage Green: #5E846A (Feature cards section)
+* Warm Gold: #DFB15B (Primary CTA buttons, sub-headlines, highlight tags)
+* Warm Cream: #FDFBF7 (Main website background)
+* Soft Sand: #F5EFE4 (Muted backgrounds, stats strips)
+* Dark Charcoal: #1C2B24 (Primary text/headlines on light backgrounds)
+* Off-White Text: #E2ECE9 (Secondary text on dark sections)
+Typography Specifications:
+* Headings: font-serif (Import Cormorant Garamond or Playfair Display via Google Fonts).
+* Body/UI: font-sans (Import Inter or DM Sans).
+* Hero Titles: text-5xl to text-6xl, text-white, leading-relaxed.
+* Section Titles: text-3xl to text-4xl, text-Charcoal (or White on dark).
+* Sub-headlines: text-xs or text-sm, uppercase, font-bold, tracking-widest, text-Gold.
+* Body Text: text-base, text-opacity-80 of Dark Charcoal.
+Page 1 Layout: index.html
+* Navigation: Sticky hybrid. Starts transparent over the hero, transitions to solid Warm Cream background with Dark Charcoal text on scroll. Includes space for a logo on the left and navigation links on the right.
+* Hero Section: Full-width placeholder background image with a dark linear gradient overlay (rgba(15, 44, 34, 0.4) to rgba(15, 44, 34, 0.8)). Left-aligned text briefing our mission to provide secure, study-friendly environments. Primary Gold CTA ("FIND YOUR ROOM") and secondary transparent outlined CTA. Small centered "SCROLL" indicator at the bottom.
+* Stats Strip: Soft Sand background, 3-column layout. Large serif numbers over small muted uppercase labels (e.g., 4 Branches, 3 Daily Meals).
+* Location Cards (4 Cards): Warm Cream background. 4 grid cards (rounded-xl aspect ratio images). Card 1: Hostel 1 Boys, Card 2: Hostel 2 Girls, Card 3: Hostel 3 Boys, Card 4: Sister Hostels 1 & 2. Make each card clickable, routing to their respective sub-pages.
+* Multi-Column Feature Cards (Global Info): Sage Green background. 4-column layout for global rules and dining menu. Flat design, minimalist thin-line icons.
+* Footer: Deep Forest Green background. Horizontal columns for Contact, Address, Links, and Copyright.
+Sub-Page Layouts (Apply to all 4 sub-pages):
+* Use the same Navbar and Footer.
+* Header: Smaller hero section with the specific branch name and a Warm Gold sub-headline detailing target demographic (e.g., "Girls-Only Accommodation").
+* Accommodation Cards: Dual-column text presentation underneath a card grid (rounded-xl images). Display pricing tiers and room packages using simple checklist-style spacing.
+* Location Details: A section to hold an iframe Google Maps embed and specific branch amenities.
+* CTA: A large Warm Gold button that says "BOOK ON WHATSAPP". Leave the href empty as [https://wa.me/](https://wa.me/) so I can inject the specific branch phone numbers manually.

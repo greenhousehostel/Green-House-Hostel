@@ -1,0 +1,1200 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* =====================================================================
+   Theme Factory: Design Tokens & CSS Custom Properties (:root)
+   Green House Hostel Design System - Luxury Emerald & Gold Aesthetic
+   ===================================================================== */
+:root {
+    /* --- Brand Core Palette --- */
+    --color-forest: #0F2C22;
+    --color-forest-rgb: 15, 44, 34;
+    --color-forest-dark: #0A1E17;
+    --color-forest-light: #163D30;
+    
+    --color-sage: #5E846A;
+    --color-sage-rgb: 94, 132, 106;
+    --color-sage-dark: #476651;
+    --color-sage-light: #7B9F86;
+
+    --color-gold: #DFB15B;
+    --color-gold-rgb: 223, 177, 91;
+    --color-gold-hover: #E8C175;
+    --color-gold-light: #F7E9CF;
+    --color-gold-dark: #C4963D;
+
+    --color-charcoal: #1C2B24;
+    --color-charcoal-rgb: 28, 43, 36;
+    --color-charcoal-light: #2D4238;
+
+    --color-cream: #FDFBF7;
+    --color-cream-rgb: 253, 251, 247;
+    
+    --color-sand: #F5EFE4;
+    --color-sand-rgb: 245, 239, 228;
+
+    --color-offwhite: #E2ECE9;
+    --color-offwhite-rgb: 226, 236, 233;
+
+    /* --- Theme Surface Tokens (Light Mode Default) --- */
+    --bg-body: #FDFBF7;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #FFFFFF;
+    --bg-surface-secondary: #F5EFE4;
+    --bg-surface-tertiary: #E2ECE9;
+    --bg-glass: rgba(15, 44, 34, 0.88);
+    --bg-glass-card: rgba(28, 43, 36, 0.85);
+    --bg-glass-subtle: rgba(255, 255, 255, 0.7);
+    --bg-navbar: rgba(15, 44, 34, 0.95);
+    --bg-navbar-scrolled: rgba(15, 44, 34, 0.96);
+    --bg-modal-backdrop: rgba(15, 44, 34, 0.65);
+    --bg-input: #FFFFFF;
+    --bg-input-focus: #FFFFFF;
+
+    /* --- Typography & Text Tokens --- */
+    --text-primary: #1C2B24;
+    --text-secondary: #4A5568;
+    --text-muted: #718096;
+    --text-light: #FFFFFF;
+    --text-gold: #DFB15B;
+    --text-gold-hover: #C4963D;
+    --text-accent: #2D6A4F;
+    --text-inverted: #FFFFFF;
+
+    /* --- Border & Divider Tokens --- */
+    --border-subtle: rgba(28, 43, 36, 0.08);
+    --border-medium: rgba(28, 43, 36, 0.15);
+    --border-strong: rgba(28, 43, 36, 0.25);
+    --border-gold: rgba(223, 177, 91, 0.25);
+    --border-gold-strong: rgba(223, 177, 91, 0.5);
+    --border-focus: #DFB15B;
+
+    /* --- Box Shadow Tokens --- */
+    --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --shadow-hover: 0 20px 35px -5px rgba(15, 44, 34, 0.12), 0 0 1px rgba(223, 177, 91, 0.4);
+    --shadow-gold: 0 4px 15px rgba(223, 177, 91, 0.3);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+    /* --- Semantic & Status Tokens --- */
+    --color-success: #10B981;
+    --color-success-bg: rgba(16, 185, 129, 0.12);
+    --color-success-border: rgba(16, 185, 129, 0.3);
+    --color-danger: #EF4444;
+    --color-danger-bg: rgba(239, 68, 68, 0.12);
+    --color-danger-border: rgba(239, 68, 68, 0.3);
+    --color-warning: #F59E0B;
+    --color-warning-bg: rgba(245, 158, 11, 0.12);
+    --color-info: #3B82F6;
+    --color-info-bg: rgba(59, 130, 246, 0.12);
+
+    /* --- Booking & Seat Status Tokens --- */
+    --color-occupied-bg: rgba(239, 68, 68, 0.08);
+    --color-occupied-text: #DC2626;
+    --color-occupied-border: rgba(239, 68, 68, 0.25);
+    --color-available-bg: rgba(16, 185, 129, 0.08);
+    --color-available-text: #059669;
+    --color-available-border: rgba(16, 185, 129, 0.25);
+    --stripe-color: rgba(28, 43, 36, 0.04);
+    --stripe-alt-color: rgba(28, 43, 36, 0.08);
+
+    /* --- External & Floating Components --- */
+    --color-whatsapp: #25D366;
+    --color-whatsapp-rgb: 37, 211, 102;
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: var(--color-offwhite);
+    --scrollbar-thumb-hover: var(--color-sage);
+
+    /* --- Typography & Scale Design Tokens --- */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =====================================================================
+   Dark Mode Theme Tokens (Theme-Factory Palette)
+   Deep Emerald & Obsidian Luxury Surfaces with Illuminated Gold Accents
+   ===================================================================== */
+[data-theme="dark"],
+body.dark-theme {
+    /* Surfaces */
+    --bg-body: #091612;
+    --bg-surface: #0F241E;
+    --bg-surface-elevated: #152E26;
+    --bg-surface-secondary: #112821;
+    --bg-surface-tertiary: #18382D;
+    --bg-glass: rgba(9, 22, 18, 0.88);
+    --bg-glass-card: rgba(15, 36, 30, 0.85);
+    --bg-glass-subtle: rgba(21, 46, 38, 0.65);
+    --bg-navbar: rgba(9, 22, 18, 0.95);
+    --bg-navbar-scrolled: rgba(9, 22, 18, 0.98);
+    --bg-modal-backdrop: rgba(0, 0, 0, 0.8);
+    --bg-input: #122620;
+    --bg-input-focus: #163229;
+
+    /* Typography & Text */
+    --text-primary: #F0F6F4;
+    --text-secondary: #9EBDB3;
+    --text-muted: #6D8C81;
+    --text-light: #FFFFFF;
+    --text-gold: #E8C175;
+    --text-gold-hover: #F3D393;
+    --text-accent: #74B596;
+    --text-inverted: #091612;
+
+    /* Borders */
+    --border-subtle: rgba(223, 177, 91, 0.12);
+    --border-medium: rgba(223, 177, 91, 0.22);
+    --border-strong: rgba(223, 177, 91, 0.38);
+    --border-gold: rgba(223, 177, 91, 0.35);
+    --border-gold-strong: rgba(223, 177, 91, 0.65);
+    --border-focus: #DFB15B;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.65);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    --shadow-hover: 0 20px 35px -5px rgba(0, 0, 0, 0.6), 0 0 20px rgba(223, 177, 91, 0.25);
+    --shadow-gold: 0 4px 20px rgba(223, 177, 91, 0.35);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
+    /* Booking & Seat Status in Dark Mode */
+    --color-occupied-bg: rgba(239, 68, 68, 0.18);
+    --color-occupied-text: #FCA5A5;
+    --color-occupied-border: rgba(239, 68, 68, 0.4);
+    --color-available-bg: rgba(16, 185, 129, 0.18);
+    --color-available-text: #6EE7B7;
+    --color-available-border: rgba(16, 185, 129, 0.4);
+    --stripe-color: rgba(223, 177, 91, 0.06);
+    --stripe-alt-color: rgba(0, 0, 0, 0.3);
+
+    /* Scrollbar */
+    --scrollbar-thumb: #1C3B30;
+    --scrollbar-thumb-hover: #5E846A;
+}
+
+/* =====================================================================
+   Base Styles & Resets
+   ===================================================================== */
+html {
+    scroll-behavior: smooth;
+    color-scheme: light dark;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: var(--font-serif);
+}
+
+/* =====================================================================
+   Dark Mode Universal Utility Adapters (High Contrast & Legibility)
+   ===================================================================== */
+[data-theme="dark"] .bg-cream,
+body.dark-theme .bg-cream {
+    background-color: var(--bg-body) !important;
+}
+
+[data-theme="dark"] .bg-sand,
+body.dark-theme .bg-sand {
+    background-color: var(--bg-surface-secondary) !important;
+    border-color: var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .bg-white,
+body.dark-theme .bg-white {
+    background-color: var(--bg-surface) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .bg-offwhite,
+body.dark-theme .bg-offwhite {
+    background-color: var(--bg-surface-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .bg-white\/5,
+body.dark-theme .bg-white\/5 {
+    background-color: rgba(223, 177, 91, 0.04) !important;
+}
+
+[data-theme="dark"] .bg-white\/10,
+body.dark-theme .bg-white\/10 {
+    background-color: rgba(223, 177, 91, 0.08) !important;
+}
+
+/* Headings, Titles and Text with text-forest */
+[data-theme="dark"] .text-forest,
+body.dark-theme .text-forest {
+    color: var(--text-primary) !important;
+}
+
+/* If text-forest is inside an illuminated Gold button/badge, keep dark text for high contrast on gold */
+[data-theme="dark"] .bg-gold .text-forest,
+[data-theme="dark"] .bg-gold.text-forest,
+[data-theme="dark"] a.bg-gold.text-forest,
+[data-theme="dark"] button.bg-gold.text-forest,
+body.dark-theme .bg-gold .text-forest,
+body.dark-theme .bg-gold.text-forest,
+body.dark-theme a.bg-gold.text-forest,
+body.dark-theme button.bg-gold.text-forest {
+    color: #0F2C22 !important;
+}
+
+[data-theme="dark"] .text-forest\/90,
+[data-theme="dark"] .text-forest\/80,
+[data-theme="dark"] .text-forest\/70,
+[data-theme="dark"] .text-forest\/60,
+body.dark-theme .text-forest\/90,
+body.dark-theme .text-forest\/80,
+body.dark-theme .text-forest\/70,
+body.dark-theme .text-forest\/60 {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .bg-forest\/5,
+[data-theme="dark"] .bg-forest\/10,
+[data-theme="dark"] .bg-forest\/20,
+body.dark-theme .bg-forest\/5,
+body.dark-theme .bg-forest\/10,
+body.dark-theme .bg-forest\/20 {
+    background-color: rgba(223, 177, 91, 0.12) !important;
+    color: var(--text-gold) !important;
+}
+
+/* Charcoal Neutral Text Adaptations */
+[data-theme="dark"] .text-charcoal,
+body.dark-theme .text-charcoal {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .text-charcoal\/40,
+[data-theme="dark"] .text-charcoal\/50,
+[data-theme="dark"] .text-charcoal\/60,
+[data-theme="dark"] .text-charcoal\/70,
+[data-theme="dark"] .text-charcoal\/80,
+[data-theme="dark"] .text-charcoal\/90,
+body.dark-theme .text-charcoal\/40,
+body.dark-theme .text-charcoal\/50,
+body.dark-theme .text-charcoal\/60,
+body.dark-theme .text-charcoal\/70,
+body.dark-theme .text-charcoal\/80,
+body.dark-theme .text-charcoal\/90 {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .border-charcoal\/5,
+[data-theme="dark"] .border-charcoal\/10,
+[data-theme="dark"] .border-charcoal\/20,
+[data-theme="dark"] .border-charcoal\/30,
+body.dark-theme .border-charcoal\/5,
+body.dark-theme .border-charcoal\/10,
+body.dark-theme .border-charcoal\/20,
+body.dark-theme .border-charcoal\/30 {
+    border-color: var(--border-subtle) !important;
+}
+
+/* Package Outline Buttons in Dark Mode */
+[data-theme="dark"] .border-charcoal\/20.text-forest,
+body.dark-theme .border-charcoal\/20.text-forest {
+    border-color: var(--border-gold) !important;
+    color: var(--text-gold) !important;
+    background-color: rgba(223, 177, 91, 0.08) !important;
+}
+
+[data-theme="dark"] .border-charcoal\/20.text-forest:hover,
+body.dark-theme .border-charcoal\/20.text-forest:hover {
+    border-color: var(--color-gold) !important;
+    background-color: var(--color-gold) !important;
+    color: var(--color-forest) !important;
+}
+
+/* Status, Seat Badges & Checklist in Dark Mode */
+[data-theme="dark"] .text-emerald-600,
+[data-theme="dark"] .text-emerald-700,
+body.dark-theme .text-emerald-600,
+body.dark-theme .text-emerald-700 {
+    color: #34D399 !important;
+}
+
+[data-theme="dark"] .text-emerald-800,
+body.dark-theme .text-emerald-800 {
+    color: #6EE7B7 !important;
+}
+
+[data-theme="dark"] .text-rose-600,
+[data-theme="dark"] .text-rose-700,
+body.dark-theme .text-rose-600,
+body.dark-theme .text-rose-700 {
+    color: #F87171 !important;
+}
+
+[data-theme="dark"] .text-rose-800,
+body.dark-theme .text-rose-800 {
+    color: #FCA5A5 !important;
+}
+
+[data-theme="dark"] .text-amber-800,
+body.dark-theme .text-amber-800 {
+    color: #FCD34D !important;
+}
+
+/* Translucent Jewel-Tone Badges & Seats in Dark Mode */
+[data-theme="dark"] .bg-emerald-50,
+[data-theme="dark"] .bg-emerald-100,
+body.dark-theme .bg-emerald-50,
+body.dark-theme .bg-emerald-100 {
+    background-color: rgba(16, 185, 129, 0.16) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+[data-theme="dark"] .bg-rose-50,
+[data-theme="dark"] .bg-rose-100,
+body.dark-theme .bg-rose-50,
+body.dark-theme .bg-rose-100 {
+    background-color: rgba(239, 68, 68, 0.16) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+[data-theme="dark"] .bg-amber-50,
+[data-theme="dark"] .bg-amber-100,
+body.dark-theme .bg-amber-50,
+body.dark-theme .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.16) !important;
+    border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="dark"] .border-emerald-200,
+[data-theme="dark"] .border-emerald-300,
+body.dark-theme .border-emerald-200,
+body.dark-theme .border-emerald-300 {
+    border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+[data-theme="dark"] .border-rose-200,
+[data-theme="dark"] .border-rose-300,
+body.dark-theme .border-rose-200,
+body.dark-theme .border-rose-300 {
+    border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+[data-theme="dark"] .border-amber-200,
+[data-theme="dark"] .border-amber-300,
+body.dark-theme .border-amber-200,
+body.dark-theme .border-amber-300 {
+    border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="dark"] .ring-rose-200,
+body.dark-theme .ring-rose-200 {
+    --tw-ring-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Illuminating Active Filter & Floor Buttons in Dark Mode */
+[data-theme="dark"] .floor-btn.bg-forest,
+[data-theme="dark"] .admin-floor-btn.bg-forest,
+[data-theme="dark"] .room-filter-btn.bg-forest,
+[data-theme="dark"] #nav-tab-seats.bg-forest,
+[data-theme="dark"] #nav-tab-users.bg-forest,
+body.dark-theme .floor-btn.bg-forest,
+body.dark-theme .admin-floor-btn.bg-forest,
+body.dark-theme .room-filter-btn.bg-forest,
+body.dark-theme #nav-tab-seats.bg-forest,
+body.dark-theme #nav-tab-users.bg-forest {
+    background-color: var(--color-gold) !important;
+    color: #0F2C22 !important;
+    box-shadow: 0 4px 15px rgba(223, 177, 91, 0.4) !important;
+}
+
+/* Deep Obsidian Adaptation for Menu Section */
+[data-theme="dark"] #menu,
+body.dark-theme #menu {
+    background-color: var(--bg-surface-secondary) !important;
+}
+
+/* Form Inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea,
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-medium) !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus,
+body.dark-theme input:focus,
+body.dark-theme select:focus,
+body.dark-theme textarea:focus {
+    background-color: var(--bg-input-focus) !important;
+    border-color: var(--border-focus) !important;
+}
+
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-xl,
+[data-theme="dark"] .shadow-2xl,
+body.dark-theme .shadow-lg,
+body.dark-theme .shadow-xl,
+body.dark-theme .shadow-2xl {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+/* =====================================================================
+   Navbar Styles & Transitions
+   ===================================================================== */
+#navbar {
+    transition: background-color var(--transition-base), backdrop-filter var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), padding var(--transition-base);
+}
+
+#navbar.scrolled {
+    background-color: var(--bg-navbar-scrolled) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-gold);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45);
+}
+
+/* Mobile Navigation Drawer */
+#mobile-drawer {
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#mobile-drawer.open {
+    transform: translateX(0);
+}
+
+#drawer-backdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+}
+
+#drawer-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* =====================================================================
+   Master WhatsApp Button & Floating Elements
+   ===================================================================== */
+.wa-float:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 20px -3px rgba(var(--color-whatsapp-rgb), 0.5);
+}
+
+@keyframes pulse-soft {
+    0% { box-shadow: 0 0 0 0 rgba(var(--color-whatsapp-rgb), 0.5); }
+    70% { box-shadow: 0 0 0 16px rgba(var(--color-whatsapp-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--color-whatsapp-rgb), 0); }
+}
+.wa-float {
+    animation: pulse-soft 2.5s infinite;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Continuous Float Animation */
+@keyframes continuous-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+.floating-card {
+    animation: continuous-float 5s ease-in-out infinite;
+}
+
+/* =====================================================================
+   Luxury Cards & Hover Effects
+   ===================================================================== */
+.hover-card, .luxury-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color var(--transition-base);
+}
+
+.hover-card:hover, .luxury-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Tab Content for Menu */
+.tab-content {
+    display: none;
+    animation: fadeIn var(--transition-base);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-tab.active {
+    background-color: var(--color-gold);
+    color: var(--color-forest);
+    font-weight: 600;
+}
+
+/* Interactive Day-Pill Tabs */
+.day-pill {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.day-pill.active {
+    background-color: var(--color-gold) !important;
+    color: var(--color-forest) !important;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(var(--color-gold-rgb), 0.35);
+    transform: translateY(-1px);
+}
+
+/* Scroll Animations */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =====================================================================
+   UI / UX Pro Max Scrollbar & Glass Utilities
+   ===================================================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+    background: var(--bg-glass-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-gold);
+}
+
+/* Seat Button Pulse Enhancement */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(var(--color-gold-rgb), 0.5), 0 0 15px rgba(var(--color-gold-rgb), 0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(var(--color-gold-rgb), 0), 0 0 25px rgba(var(--color-gold-rgb), 0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--color-gold-rgb), 0), 0 0 15px rgba(var(--color-gold-rgb), 0.3); }
+}
+
+/* UI Animations */
+.fade-in-scale {
+    animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.slide-up-fade {
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Diagonal Stripe for Occupied Seats */
+.bg-diagonal-stripes {
+    background-image: repeating-linear-gradient(
+        45deg,
+        var(--stripe-color),
+        var(--stripe-color) 10px,
+        var(--stripe-alt-color) 10px,
+        var(--stripe-alt-color) 20px
+    );
+}
+
+/* Micro-interactions */
+.seat-btn {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.seat-btn.available:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 16px -4px rgba(var(--color-sage-rgb), 0.25);
+}
+.seat-btn.selected {
+    animation: pulseGlow 2s infinite;
+}
+
+/* Theme Toggle Button Style */
+.theme-toggle-btn {
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-gold);
+}
+.theme-toggle-btn:hover {
+    background-color: var(--color-gold);
+    color: var(--color-forest);
+}
+
+/* =====================================================================
+   Canvas-Design: Interactive Vector SVG Seat Map Styles
+   ===================================================================== */
+.svg-bed-node {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+.svg-bed-node:not(.cursor-not-allowed):hover {
+    transform: scale(1.08);
+}
+.svg-bed-node:focus-visible {
+    outline: 2px solid var(--color-gold) !important;
+    outline-offset: 4px;
+}
+
+[data-theme="dark"] #interactive-svg-map-wrapper {
+    background-color: #0F241E !important;
+    border-color: rgba(223, 177, 91, 0.25) !important;
+}
+
+[data-theme="dark"] #interactive-svg-container svg {
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.4));
+}
+
+[data-theme="dark"] #building-bg stop:first-child {
+    stop-color: #0B1C16 !important;
+}
+[data-theme="dark"] #building-bg stop:last-child {
+    stop-color: #081510 !important;
+}
+
+[data-theme="dark"] #room-gradient stop:first-child {
+    stop-color: #142E25 !important;
+}
+[data-theme="dark"] #room-gradient stop:last-child {
+    stop-color: #0F241E !important;
+}
+
+/* =====================================================================
+   Interactive Dropdown Lamp & Spotlight Auth Experience
+   Inspired by classic interactive lighting UI for Green House Hostel
+   ===================================================================== */
+
+/* 1. Navbar Interactive Switch */
+.ghh-navbar-switch {
+    cursor: pointer;
+    background: rgba(15, 44, 34, 0.85);
+    border: 1px solid rgba(223, 177, 91, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    user-select: none;
+}
+.ghh-navbar-switch:hover {
+    border-color: #DFB15B;
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.3);
+}
+.ghh-switch-track {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(223, 177, 91, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ghh-switch-thumb {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.ghh-navbar-switch.ghh-lamp-active .ghh-switch-track {
+    background: rgba(223, 177, 91, 0.25);
+    border-color: #DFB15B;
+}
+.ghh-navbar-switch.ghh-lamp-active .ghh-switch-thumb {
+    transform: translateX(16px);
+    background-color: #DFB15B;
+    box-shadow: 0 0 12px #DFB15B, 0 0 20px rgba(223, 177, 91, 0.6);
+}
+.ghh-navbar-switch.ghh-lamp-active .ghh-switch-thumb span {
+    background-color: #0F2C22;
+}
+
+/* 2. Fullscreen Deep Forest Green Lamp Stage */
+#ghh-lamp-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 16px;
+    background: radial-gradient(circle at 50% 18%, #0d281f 0%, #061912 55%, #020c08 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#ghh-lamp-stage.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 3. The Pendant Lamp Assembly */
+.ghh-pendant-assembly {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 540px;
+    z-index: 20;
+    transform: translateY(-160px);
+    transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+#ghh-lamp-stage.active .ghh-pendant-assembly {
+    transform: translateY(0);
+}
+
+/* Ceiling Wire */
+.ghh-lamp-wire {
+    width: 2.5px;
+    height: 70px;
+    background: linear-gradient(180deg, #1C2B24 0%, #DFB15B 60%, #8C6A28 100%);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Lamp Fixture & Shade */
+.ghh-lamp-fixture {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ghh-lamp-cap {
+    width: 24px;
+    height: 8px;
+    background: #DFB15B;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.ghh-lamp-shade {
+    width: 140px;
+    height: 44px;
+    background: linear-gradient(180deg, #DFB15B 0%, #B88B35 60%, #5E4314 100%);
+    clip-path: polygon(22% 0%, 78% 0%, 100% 100%, 0% 100%);
+    border-bottom: 3px solid #F3DA9C;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+/* Bulb Inside Shade */
+.ghh-lamp-bulb {
+    width: 32px;
+    height: 18px;
+    background: #3A3528;
+    border-radius: 0 0 16px 16px;
+    margin-top: -2px;
+    transition: all 0.25s ease-out;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 10;
+}
+
+#ghh-lamp-stage.lamp-lit .ghh-lamp-bulb {
+    background: #FFF8DF;
+    box-shadow: 0 0 25px 10px rgba(223, 177, 91, 0.9), 0 0 60px 25px rgba(255, 235, 170, 0.6);
+}
+
+/* Interactive Pull Cord on the Lamp */
+.ghh-lamp-pull-cord {
+    position: absolute;
+    right: 20px;
+    top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 10px 14px;
+    margin: -10px -14px;
+    touch-action: manipulation;
+}
+.ghh-lamp-pull-cord:hover {
+    transform: translateY(4px);
+}
+.ghh-lamp-pull-cord:active {
+    transform: translateY(12px);
+}
+.ghh-pull-string {
+    width: 1.5px;
+    height: 65px;
+    background: rgba(223, 177, 91, 0.7);
+}
+.ghh-pull-bead {
+    width: 9px;
+    height: 12px;
+    background: #DFB15B;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* 4. Glowing Radiant Light Cone */
+.ghh-light-cone {
+    position: absolute;
+    top: 122px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 680px;
+    height: 720px;
+    max-width: 96vw;
+    clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, 
+        rgba(223, 177, 91, 0.55) 0%, 
+        rgba(223, 177, 91, 0.28) 25%, 
+        rgba(223, 177, 91, 0.12) 65%, 
+        rgba(223, 177, 91, 0.02) 90%, 
+        transparent 100%);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    filter: blur(1px);
+    transition: opacity 0.35s ease-out;
+}
+
+#ghh-lamp-stage.lamp-lit .ghh-light-cone {
+    opacity: 1;
+    animation: ghh-light-flicker 0.25s ease-out forwards;
+}
+
+@keyframes ghh-light-flicker {
+    0% { opacity: 0; }
+    30% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+    80% { opacity: 0.95; }
+    100% { opacity: 1; }
+}
+
+/* Light Pool Glow at bottom */
+.ghh-light-pool {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 520px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(223, 177, 91, 0.28) 0%, rgba(223, 177, 91, 0.08) 50%, transparent 75%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+#ghh-lamp-stage.lamp-lit .ghh-light-pool {
+    opacity: 1;
+}
+
+/* 5. Spotlight Login & Register Card */
+.ghh-spotlight-card-wrapper {
+    position: relative;
+    z-index: 30;
+    width: 100%;
+    max-width: 440px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(25px) scale(0.96);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#ghh-lamp-stage.lamp-lit .ghh-spotlight-card-wrapper {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.1s;
+}
+
+.ghh-spotlight-card {
+    background: rgba(10, 32, 24, 0.88);
+    border: 1.5px solid rgba(223, 177, 91, 0.4);
+    box-shadow: 0 0 35px rgba(223, 177, 91, 0.2), 0 25px 60px rgba(0, 0, 0, 0.7);
+    border-radius: 28px;
+    padding: 32px 28px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #FDFBF7;
+    position: relative;
+}
+
+/* Close button inside card */
+.ghh-lamp-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.ghh-lamp-close-btn:hover {
+    background: rgba(223, 177, 91, 0.2);
+    color: #DFB15B;
+    border-color: #DFB15B;
+}
+
+/* Interactive Tabs */
+.ghh-spotlight-tab-btn {
+    transition: all 0.25s ease;
+}
+
+/* Card Input Styles */
+.ghh-spotlight-input {
+    background: transparent !important;
+    border: none !important;
+    color: #FDFBF7 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    width: 100%;
+}
+.ghh-spotlight-input::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* 6. Embossed Neumorphic Interactive Input Wrapper */
+.ghh-embossed-field {
+    position: relative;
+    background: #092017;
+    border-radius: 14px;
+    border: 1px solid rgba(223, 177, 91, 0.22);
+    box-shadow: inset 2px 3px 6px rgba(0, 0, 0, 0.55), inset -1px -1px 3px rgba(223, 177, 91, 0.12);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+}
+.ghh-embossed-field:focus-within {
+    border-color: #DFB15B;
+    box-shadow: inset 2px 3px 6px rgba(0, 0, 0, 0.65), 0 0 12px rgba(223, 177, 91, 0.25);
+}
+.ghh-embossed-field.ghh-field-error {
+    border-color: #EF4444 !important;
+    box-shadow: inset 2px 3px 6px rgba(0, 0, 0, 0.65), 0 0 12px rgba(239, 68, 68, 0.35) !important;
+}
+
+/* Animated Gradient Focus Line at bottom of input */
+.ghh-focus-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #DFB15B 30%, #6EE7B7 70%, transparent);
+    transform: translateX(-50%);
+    border-radius: 2px;
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+.ghh-embossed-field:focus-within .ghh-focus-line {
+    width: 88%;
+    box-shadow: 0 0 8px rgba(223, 177, 91, 0.7);
+}
+
+/* Password Eye Toggle Button */
+.ghh-eye-toggle {
+    background: transparent;
+    border: none;
+    color: rgba(223, 177, 91, 0.65);
+    padding: 8px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+    border-radius: 50%;
+    margin-right: 4px;
+    user-select: none;
+}
+.ghh-eye-toggle:hover {
+    color: #DFB15B;
+    transform: scale(1.1);
+}
+
+/* Interactive Floating Embossed Warning Tooltip */
+.ghh-input-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 10px;
+    z-index: 100;
+    background: #FFFDF5;
+    color: #142E24;
+    border: 1.5px solid #DFB15B;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(223, 177, 91, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+    animation: ghh-tooltip-pop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards, ghh-shake 0.4s ease 0.05s;
+    white-space: nowrap;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ghh-input-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 18px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #DFB15B;
+}
+.ghh-input-tooltip::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    left: 18px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #FFFDF5;
+}
+
+@keyframes ghh-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+@keyframes ghh-tooltip-pop {
+    from { opacity: 0; transform: translateY(-6px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Button Success State Animation */
+.ghh-btn-success {
+    background: linear-gradient(135deg, #10B981, #047857) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.7) !important;
+    transform: scale(1.02);
+}
+
+/* Round Tactile Switcher Buttons (+) and (<-) */
+.ghh-round-switcher-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #082117;
+    border: 1px solid rgba(223, 177, 91, 0.4);
+    color: #DFB15B;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5), -1px -1px 3px rgba(223, 177, 91, 0.15);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+.ghh-round-switcher-btn:hover {
+    transform: scale(1.12);
+    background: #DFB15B;
+    color: #0F2C22;
+    box-shadow: 0 0 14px rgba(223, 177, 91, 0.6);
+}
+
+/* Custom Embossed Remember-Me Checkbox */
+.ghh-embossed-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    background: #092017;
+    border: 1px solid rgba(223, 177, 91, 0.35);
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.ghh-embossed-checkbox:checked {
+    background: #DFB15B;
+    border-color: #DFB15B;
+    box-shadow: 0 0 8px rgba(223, 177, 91, 0.6);
+}
+.ghh-embossed-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0F2C22;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+    .ghh-pendant-assembly {
+        transform: translateY(-120px);
+    }
+    .ghh-lamp-wire {
+        height: 45px;
+    }
+    .ghh-lamp-shade {
+        width: 110px;
+        height: 36px;
+    }
+    .ghh-light-cone {
+        top: 90px;
+        width: 95vw;
+        height: 640px;
+    }
+    .ghh-spotlight-card {
+        padding: 24px 20px;
+    }
+}
+
+[data-theme="dark"] .svg-room-group text[fill="#0F2C22"] {
+    fill: #DFB15B !important;
+}

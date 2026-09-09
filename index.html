@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Green House Hostel provides premium, secure, and comfortable accommodation for students and professionals.">
+    <title>Green House Hostel - Premium Student Accommodation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0F2C22',
+                        sage: '#5E846A',
+                        gold: '#DFB15B',
+                        cream: '#FDFBF7',
+                        sand: '#F5EFE4',
+                        charcoal: '#1C2B24',
+                        offwhite: '#E2ECE9',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css?v=12">
+    <script src="theme-toggle.js"></script>
+    <script src="auth.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased selection:bg-gold selection:text-forest">
+
+    <!-- Sticky Frosted Navbar -->
+    <nav id="navbar" class="fixed w-full z-40 py-4 transition-all duration-300 bg-forest/95 backdrop-blur-md border-b border-gold/20 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center w-full justify-between">
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 sm:h-12 w-auto transition-all duration-300">
+                <span class="text-white font-serif text-xl sm:text-2xl font-bold tracking-wide transition-colors duration-300">Green House</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-white/90 font-medium text-xs tracking-widest uppercase transition-colors duration-300">
+                <a href="index.html" class="hover:text-gold transition-colors text-gold font-bold" aria-current="page">Home</a>
+                <a href="#locations" class="hover:text-gold transition-colors">Branches</a>
+                <a href="seat-plan.html" class="hover:text-gold transition-colors flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Seat Plan</a>
+                <a href="#rules" class="hover:text-gold transition-colors">Rules</a>
+                <a href="#dining" class="hover:text-gold transition-colors">Weekly Menu</a>
+            </div>
+
+            <div class="flex items-center gap-2.5 shrink-0">
+                <!-- Theme Toggle Button (44x44px Touch Target) -->
+                <button class="theme-toggle-btn w-11 h-11 min-w-[44px] min-h-[44px] rounded-full text-gold bg-white/10 hover:bg-gold hover:text-forest transition-all flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+                <div id="auth-nav-slot"></div>
+                <a href="seat-plan.html" class="hidden sm:inline-flex items-center gap-1.5 bg-white/10 border border-gold/40 text-gold px-3.5 py-2 min-h-[44px] rounded-full text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-forest transition-all shadow-sm">
+                    <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Seat Plan
+                </a>
+                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20want%20to%20book%20a%20seat." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex bg-gold text-forest px-4 sm:px-5 py-2 min-h-[44px] rounded-full text-xs sm:text-xs font-bold uppercase tracking-wider hover:bg-white transition-all shadow-md items-center">
+                    Book Now
+                </a>
+                <!-- Mobile Hamburger Button (44x44px Touch Target) -->
+                <button id="mobile-drawer-toggle" aria-label="Open Navigation Menu" class="md:hidden text-white w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/10 hover:bg-gold hover:text-forest transition-colors flex items-center justify-center">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer & Backdrop -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"></div>
+    <aside id="mobile-drawer" class="fixed top-0 right-0 w-[280px] sm:w-[320px] h-full bg-forest text-white z-50 p-6 flex flex-col justify-between shadow-2xl border-l border-gold/20">
+        <div>
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-2.5">
+                    <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-9 w-auto">
+                    <span class="font-serif font-bold text-lg text-white">Green House</span>
+                </div>
+                <button id="mobile-drawer-close" aria-label="Close Navigation Menu" class="w-11 h-11 min-w-[44px] min-h-[44px] text-white/70 hover:text-gold rounded-lg flex items-center justify-center">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-4 text-sm font-medium uppercase tracking-widest">
+                <a href="index.html" class="block py-2 text-gold font-bold border-b border-white/5" aria-current="page">Home</a>
+                <a href="#locations" class="mobile-nav-link block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Our Branches</a>
+                <a href="seat-plan.html" class="block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors flex items-center gap-2">
+                    <i data-lucide="layout-grid" class="w-4 h-4 text-gold"></i> Live Seat Plan
+                </a>
+                <a href="#rules" class="mobile-nav-link block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Rules & Policies</a>
+                <a href="#dining" class="mobile-nav-link block py-2 text-offwhite hover:text-gold border-b border-white/5 transition-colors">Weekly Menu</a>
+                <a href="admin.html" class="block py-2 text-xs text-gold/80 hover:text-gold flex items-center gap-1.5 pt-2">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Portal
+                </a>
+            </nav>
+        </div>
+
+        <div class="space-y-3 pt-6 border-t border-white/10">
+            <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20want%20to%20book%20a%20seat." target="_blank" rel="noopener noreferrer" class="w-full bg-gold text-forest py-3 rounded-xl font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-lg">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Book via WhatsApp
+            </a>
+            <div class="text-center text-[10px] text-offwhite/50 tracking-wider">
+                +880 1703-585853 • Diabari, Uttara
+            </div>
+        </div>
+    </aside>
+    <!-- Main Landmark Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center pt-32 pb-24 md:pt-20 md:pb-0">
+            <!-- Background Image with Gradient Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="./images/hero_bg.png" alt="Premium Hostel Lobby" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-[rgba(15,44,34,0.8)] to-[rgba(15,44,34,0.4)]"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto px-6 w-full text-white">
+                <div class="max-w-3xl fade-up">
+                    <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-4">Premium Student Accommodation</h4>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight mb-6">A safe, study-friendly environment.</h1>
+                    <p class="text-lg md:text-xl text-offwhite opacity-90 mb-10 leading-relaxed font-light max-w-2xl">
+                        Green House Hostel is committed to providing a secure, premium, and study-friendly living environment for students and professionals. Owned and operated for years with dedication, we ensure regular cleanliness, robust security, high-speed Wi-Fi, and nutritious dining so you can focus entirely on your academic and career goals.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="seat-plan.html" class="bg-gold text-forest px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-all shadow-lg flex items-center gap-2">
+                            <i data-lucide="layout-grid" class="w-5 h-5"></i> View Seat Plan (Hostel 1)
+                        </a>
+                        <a href="#locations" class="border border-white/40 text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/10 transition-colors backdrop-blur-sm">Find Your Room</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center animate-bounce z-10">
+                <span class="text-white/60 text-xs uppercase tracking-widest mb-2 font-semibold">Scroll</span>
+                <i data-lucide="chevron-down" class="text-white/60 w-5 h-5"></i>
+            </div>
+        </section>
+
+        <!-- 3-Column Stats Strip -->
+        <section class="bg-sand py-16 border-y border-charcoal/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center fade-up divide-y md:divide-y-0 md:divide-x divide-charcoal/10">
+                    <div class="py-4">
+                        <div class="text-5xl font-serif font-bold text-forest mb-2">4</div>
+                        <div class="text-sm font-bold uppercase tracking-widest text-charcoal/60">Premium Branches</div>
+                    </div>
+                    <div class="py-4">
+                        <div class="text-5xl font-serif font-bold text-forest mb-2">3</div>
+                        <div class="text-sm font-bold uppercase tracking-widest text-charcoal/60">Nutritious Daily Meals</div>
+                    </div>
+                    <div class="py-4">
+                        <div class="text-5xl font-serif font-bold text-forest mb-2">100%</div>
+                        <div class="text-sm font-bold uppercase tracking-widest text-charcoal/60">Study-Focused Environment</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Cards Grid -->
+        <section id="locations" class="py-24 bg-cream">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-2">Our Locations</h4>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-forest">Find Your Perfect Stay</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <!-- Card 1: Hostel 1 Boys -->
+                    <div class="bg-white rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-card flex flex-col h-full border border-charcoal/5">
+                        <div class="aspect-[4/3] relative overflow-hidden">
+                            <img src="./images/hostel_1_boys.png" alt="Hostel 1 Boys" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <div class="absolute top-4 right-4 bg-forest text-gold text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">Boys Wing</div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-serif font-bold text-forest mb-1 leading-tight">Hostel 1 Boys</h3>
+                            <p class="text-charcoal/70 text-sm mb-4 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-gold shrink-0"></i> Diabari, Uttara</p>
+                            
+                            <!-- Pricing Details -->
+                            <div class="bg-forest/5 p-3.5 rounded-xl border border-forest/10 mb-5 space-y-1.5 text-xs flex-grow">
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-forest/70 mb-1 flex items-center justify-between">
+                                    <span>Pricing</span>
+                                    <span class="text-emerald-700 font-semibold">Meals Included</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>Single Seat:</span>
+                                    <span class="font-bold text-forest">from 11,000 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>2-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 12,500 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>3-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 11,000 tk</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 mt-auto">
+                                <a href="hostel-1-boys.html" class="block w-full text-center border border-charcoal/15 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-forest hover:text-white transition-all">View Branch Info</a>
+                                <a href="seat-plan.html" class="block w-full text-center bg-forest text-gold py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-forest transition-all shadow-sm flex items-center justify-center gap-1.5">
+                                    <i data-lucide="layout-grid" class="w-4 h-4"></i> View Live Seat Plan
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Hostel 2 Girls -->
+                    <div class="bg-white rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-card flex flex-col h-full border border-charcoal/5">
+                        <div class="aspect-[4/3] relative overflow-hidden">
+                            <img src="./images/hostel_2_girls.png" alt="Hostel 2 Girls" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <div class="absolute top-4 right-4 bg-forest text-gold text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">Girls Wing</div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-serif font-bold text-forest mb-1 leading-tight">Hostel 2 Girls</h3>
+                            <p class="text-charcoal/70 text-sm mb-4 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-gold shrink-0"></i> Diabari, Uttara</p>
+                            
+                            <!-- Pricing Details -->
+                            <div class="bg-forest/5 p-3.5 rounded-xl border border-forest/10 mb-5 space-y-1.5 text-xs flex-grow">
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-forest/70 mb-1 flex items-center justify-between">
+                                    <span>Pricing</span>
+                                    <span class="text-emerald-700 font-semibold">Meals Included</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>1-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 15,000 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>2-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 12,500 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>3-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 10,500 tk</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 mt-auto">
+                                <a href="hostel-2-girls.html" class="block w-full text-center border border-charcoal/15 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-forest hover:text-white transition-all">View Branch Info</a>
+                                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20would%20like%20to%20inquire%20about%20Hostel%202%20Girls%20branch%20at%20Diabari%2C%20Uttara." target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-[#25D366]/10 text-[#128C7E] py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#25D366] hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                    Chat on WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Hostel 3 Boys -->
+                    <div class="bg-white rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-card flex flex-col h-full border border-charcoal/5">
+                        <div class="aspect-[4/3] relative overflow-hidden">
+                            <img src="./images/hostel_3_boys.png" alt="Hostel 3 Boys" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <div class="absolute top-4 right-4 bg-forest text-gold text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">Boys Wing</div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-serif font-bold text-forest mb-1 leading-tight">Hostel 3 Boys</h3>
+                            <p class="text-charcoal/70 text-sm mb-4 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-gold shrink-0"></i> Near NSU & IUB, Safwan Rd</p>
+                            
+                            <!-- Pricing Details -->
+                            <div class="bg-forest/5 p-3.5 rounded-xl border border-forest/10 mb-5 space-y-1.5 text-xs flex-grow">
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-forest/70 mb-1 flex items-center justify-between">
+                                    <span>Pricing</span>
+                                    <span class="text-emerald-700 font-semibold">Meals Included</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>Single Seat:</span>
+                                    <span class="font-bold text-forest">from 17,500 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>2-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 17,500 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>3-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 14,500 tk</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 mt-auto">
+                                <a href="hostel-3-boys.html" class="block w-full text-center border border-charcoal/15 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-forest hover:text-white transition-all">View Branch Info</a>
+                                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20would%20like%20to%20inquire%20about%20Hostel%203%20Boys%20branch%20near%20NSU%20%26%20IUB%2C%20Safwan%20Road." target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-[#25D366]/10 text-[#128C7E] py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#25D366] hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                    Chat on WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Sister Hostels -->
+                    <div class="bg-white rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover-card flex flex-col h-full border border-charcoal/5">
+                        <div class="aspect-[4/3] relative overflow-hidden">
+                            <img src="./images/sister_hostels.png" alt="Sister Hostels" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <div class="absolute top-4 right-4 bg-forest text-gold text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-md">Boys & Girls Wings</div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-serif font-bold text-forest mb-1 leading-tight">Sister Hostels</h3>
+                            <p class="text-charcoal/70 text-sm mb-4 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-gold shrink-0"></i> Mirpur 10</p>
+                            
+                            <!-- Pricing Details -->
+                            <div class="bg-forest/5 p-3.5 rounded-xl border border-forest/10 mb-5 space-y-1.5 text-xs flex-grow">
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-forest/70 mb-1 flex items-center justify-between">
+                                    <span>Pricing</span>
+                                    <span class="text-emerald-700 font-semibold">Meals Included</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>4-Seat Room:</span>
+                                    <span class="font-bold text-forest">from 7,500 tk</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>Service Charge:</span>
+                                    <span class="font-bold text-forest">3,500 tk/yr</span>
+                                </div>
+                                <div class="flex justify-between items-center text-charcoal/80">
+                                    <span>Wings:</span>
+                                    <span class="font-bold text-forest">Boys & Girls</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 mt-auto">
+                                <a href="sister-hostels-combined.html" class="block w-full text-center border border-charcoal/15 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-forest hover:text-white transition-all">View Branch Info</a>
+                                <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20would%20like%20to%20inquire%20about%20Sister%20Hostels%20%281%20Boys%20%26%202%20Girls%29%20at%20Mirpur%2010." target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-[#25D366]/10 text-[#128C7E] py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#25D366] hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                    Chat on WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Info & Menu Section -->
+        <section id="menu" class="py-24 bg-sage text-offwhite">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    
+                    <!-- Rules Column -->
+                    <div id="rules" class="lg:col-span-4 scroll-mt-24">
+                        <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-2">Hostel Policies</h4>
+                        <h2 class="text-4xl font-serif font-bold text-white mb-8">Universal Rules</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-forest/50 p-3 rounded-lg text-gold"><i data-lucide="clock"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-white mb-1">Curfew Timings</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Residents must return by 11:00 PM (in girls hostel at 7:00 PM, approval from guardian needed to stay out longer). Late entries require prior permission from management.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-forest/50 p-3 rounded-lg text-gold"><i data-lucide="calendar"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-white mb-1">Payment Deadlines</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Rent must be paid by the 7th of every month. Late payments may incur a penalty.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-forest/50 p-3 rounded-lg text-gold"><i data-lucide="users"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-white mb-1">Visitor Policies</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Visitors are allowed in the common lobby. Parents are allowed to stay over with prior management permission.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-forest/50 p-3 rounded-lg text-gold"><i data-lucide="shield-check"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-white mb-1">Security Deposit</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">A security deposit is required at check-in, refundable upon leaving with a 1-month notice.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dining Menu Column -->
+                    <div id="dining" class="lg:col-span-8 bg-forest/30 p-8 md:p-10 rounded-2xl border border-white/10 backdrop-blur-sm scroll-mt-24">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                            <div>
+                                <h4 class="text-gold text-sm font-bold uppercase tracking-widest mb-2">Nutritious Food</h4>
+                                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">Weekly Dining Menu</h2>
+                            </div>
+                            <div class="text-xs uppercase tracking-wider opacity-70 bg-black/20 px-4 py-2 rounded-lg inline-block">
+                                * Food items subject to change
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
+                                <div class="text-gold mb-1"><i data-lucide="coffee" class="w-5 h-5 mx-auto"></i></div>
+                                <div class="font-bold text-sm uppercase tracking-widest text-white mb-1">Breakfast</div>
+                                <div class="text-xs opacity-70">7:30 AM - 8:30 AM</div>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
+                                <div class="text-gold mb-1"><i data-lucide="sun" class="w-5 h-5 mx-auto"></i></div>
+                                <div class="font-bold text-sm uppercase tracking-widest text-white mb-1">Lunch</div>
+                                <div class="text-xs opacity-70">1:30 PM - 2:30 PM</div>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
+                                <div class="text-gold mb-1"><i data-lucide="moon" class="w-5 h-5 mx-auto"></i></div>
+                                <div class="font-bold text-sm uppercase tracking-widest text-white mb-1">Dinner</div>
+                                <div class="text-xs opacity-70">9:00 PM - 10:00 PM</div>
+                            </div>
+                        </div>
+
+                        <!-- Daily Schedule Grid -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
+                                <thead>
+                                    <tr class="border-b border-white/20 text-gold font-bold uppercase tracking-wider text-xs">
+                                        <th class="py-3 px-4 w-1/4">Day</th>
+                                        <th class="py-3 px-4 w-1/4">Morning</th>
+                                        <th class="py-3 px-4 w-1/4">Noon</th>
+                                        <th class="py-3 px-4 w-1/4">Night</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/10">
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Friday</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Vegetables/Mash + Egg</td>
+                                        <td class="py-4 px-4 opacity-80">Beef/Chicken + Polao/White Rice</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Fish Curry</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Saturday</td>
+                                        <td class="py-4 px-4 opacity-80">Roti + Bhaji</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Curry + Fish</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Vegetables + Chicken</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Sunday</td>
+                                        <td class="py-4 px-4 opacity-80">Khichuri</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Curry + Fish</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Egg + Vegetables</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Monday</td>
+                                        <td class="py-4 px-4 opacity-80">Roti + Bhaji</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Chicken</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Fish Curry</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Tuesday</td>
+                                        <td class="py-4 px-4 opacity-80">Khichuri</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Curry + Fish</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Egg + Vegetables</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Wednesday</td>
+                                        <td class="py-4 px-4 opacity-80">Roti + Bhaji</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Chicken</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Fish Curry</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-4 px-4 font-bold text-white">Thursday</td>
+                                        <td class="py-4 px-4 opacity-80">Khichuri</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Fish Curry</td>
+                                        <td class="py-4 px-4 opacity-80">Rice + Dal + Fish Curry</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mobile Interactive Day-by-Day Dining Menu -->
+                        <div class="md:hidden mt-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs uppercase tracking-widest text-gold font-bold flex items-center gap-1.5">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i> Select Day:
+                                </span>
+                                <span class="text-[10px] text-white/50 uppercase tracking-wider">Tap a day</span>
+                            </div>
+
+                            <!-- Day Selector Pills Carousel (44px min-h touch target) -->
+                            <div class="flex overflow-x-auto gap-2 pb-3 no-scrollbar" id="menu-day-pills">
+                                <button data-day="0" class="day-pill active px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Friday</button>
+                                <button data-day="1" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Saturday</button>
+                                <button data-day="2" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Sunday</button>
+                                <button data-day="3" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Monday</button>
+                                <button data-day="4" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Tuesday</button>
+                                <button data-day="5" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Wednesday</button>
+                                <button data-day="6" class="day-pill px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold bg-white/10 text-white shrink-0">Thursday</button>
+                            </div>
+
+                            <!-- Active Day Meal Details Card -->
+                            <div id="active-day-card" class="bg-forest/80 rounded-2xl p-6 border border-gold/30 shadow-xl mt-2 fade-in-scale">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-5">
+                                    <h3 id="active-day-title" class="font-serif font-bold text-2xl text-gold">Friday</h3>
+                                    <span class="text-[10px] uppercase tracking-widest text-emerald-400 font-bold bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">3 Meals</span>
+                                </div>
+
+                                <div class="space-y-4 text-sm">
+                                    <div class="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/5">
+                                        <div class="w-8 h-8 rounded-lg bg-gold/20 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                                            <i data-lucide="coffee" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] uppercase font-bold text-gold tracking-widest mb-0.5">Morning (7:30 - 8:30 AM)</div>
+                                            <div id="active-meal-morning" class="text-white font-medium">Rice + Dal + Vegetables/Mash + Egg</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/5">
+                                        <div class="w-8 h-8 rounded-lg bg-gold/20 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                                            <i data-lucide="sun" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] uppercase font-bold text-gold tracking-widest mb-0.5">Noon (1:30 - 2:30 PM)</div>
+                                            <div id="active-meal-noon" class="text-white font-medium">Beef/Chicken + Polao/White Rice</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/5">
+                                        <div class="w-8 h-8 rounded-lg bg-gold/20 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                                            <i data-lucide="moon" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] uppercase font-bold text-gold tracking-widest mb-0.5">Night (9:00 - 10:00 PM)</div>
+                                            <div id="active-meal-night" class="text-white font-medium">Rice + Dal + Fish Curry</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-forest pt-16 pb-28 md:pb-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="./Info/Green Logo 2.svg" alt="Green House Logo" class="h-10 w-auto">
+                        <span class="text-white font-serif text-lg sm:text-2xl font-bold tracking-wide sm:tracking-widest">Green House</span>
+                    </div>
+                    <p class="text-offwhite opacity-80 text-sm leading-relaxed max-w-sm mb-6">
+                        A premium hostel brand dedicated to providing secure, comfortable, and study-friendly accommodations.
+                    </p>
+                    <div class="flex items-center gap-4 text-white">
+                        <a href="https://www.facebook.com/share/1D7kcvSGGa/" target="_blank" rel="noopener noreferrer" aria-label="Visit Green House Facebook Page" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.597 1.323-1.324V1.325C24 .597 23.403 0 22.675 0z"/></svg></a>
+                        <a href="https://www.youtube.com/@GreenHouseHostel4u" target="_blank" rel="noopener noreferrer" aria-label="Visit Green House YouTube Channel" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                        <a href="mailto:greenhouse5014@gmail.com" aria-label="Send Email to Green House Hostel" class="bg-white/10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full hover:bg-gold hover:text-forest transition-colors flex items-center justify-center"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-gold font-bold uppercase tracking-widest text-sm mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-offwhite opacity-80 text-sm">
+                        <li><a href="index.html" class="hover:text-gold transition-colors">Home</a></li>
+                        <li><a href="#locations" class="hover:text-gold transition-colors">Our Branches</a></li>
+                        <li><a href="seat-plan.html" class="hover:text-gold transition-colors">Live Seat Plan</a></li>
+                        <li><a href="#dining" class="hover:text-gold transition-colors">Weekly Menu</a></li>
+                        <li><a href="#rules" class="hover:text-gold transition-colors">Rules & Policies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-gold font-bold uppercase tracking-widest text-sm mb-6">Contact Us</h4>
+                    <ul class="space-y-4 text-offwhite opacity-80 text-sm sm:text-base">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-gold shrink-0"></i>
+                            <span>+880 1703-585853</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-gold shrink-0"></i>
+                            <span class="break-all">greenhouse5014@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-offwhite opacity-60">
+                <p>&copy; 2026 Green House Hostel. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed for Premium Comfort.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Master Floating WhatsApp Button -->
+    <a href="https://wa.me/8801703585853?text=Hello%20Green%20House%20Hostel%2C%20I%20am%20interested%20in%20booking%20a%20seat.%20Please%20share%20more%20details." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl wa-float z-40 flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- Scripts: Lucide Icons, Navbar Scroll, Mobile Drawer, Day Switcher -->
+    <script>
+        lucide.createIcons();
+        
+        // Sticky Frosted Navbar Scroll Listener
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Drawer Toggle
+        const drawerToggle = document.getElementById('mobile-drawer-toggle');
+        const drawerClose = document.getElementById('mobile-drawer-close');
+        const drawerBackdrop = document.getElementById('drawer-backdrop');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+
+        function openDrawer() {
+            mobileDrawer.classList.add('open');
+            drawerBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            mobileDrawer.classList.remove('open');
+            drawerBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (drawerToggle) drawerToggle.addEventListener('click', openDrawer);
+        if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', closeDrawer);
+        });
+
+        // Interactive Mobile Dining Day Switcher
+        const WEEKLY_MENU = [
+            { day: 'Friday', morning: 'Rice + Dal + Vegetables/Mash + Egg', noon: 'Beef/Chicken + Polao/White Rice', night: 'Rice + Dal + Fish Curry' },
+            { day: 'Saturday', morning: 'Roti + Bhaji', noon: 'Rice + Dal + Curry + Fish', night: 'Rice + Vegetables + Chicken' },
+            { day: 'Sunday', morning: 'Khichuri', noon: 'Rice + Dal + Curry + Fish', night: 'Rice + Dal + Egg + Vegetables' },
+            { day: 'Monday', morning: 'Roti + Bhaji', noon: 'Rice + Dal + Chicken', night: 'Rice + Dal + Fish Curry' },
+            { day: 'Tuesday', morning: 'Khichuri', noon: 'Rice + Dal + Curry + Fish', night: 'Rice + Dal + Egg + Vegetables' },
+            { day: 'Wednesday', morning: 'Roti + Bhaji', noon: 'Rice + Dal + Chicken', night: 'Rice + Dal + Fish Curry' },
+            { day: 'Thursday', morning: 'Khichuri', noon: 'Rice + Dal + Fish Curry', night: 'Rice + Dal + Fish Curry' }
+        ];
+
+        const dayPills = document.querySelectorAll('#menu-day-pills .day-pill');
+        const dayTitleEl = document.getElementById('active-day-title');
+        const morningEl = document.getElementById('active-meal-morning');
+        const noonEl = document.getElementById('active-meal-noon');
+        const nightEl = document.getElementById('active-meal-night');
+        const activeCard = document.getElementById('active-day-card');
+
+        dayPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                dayPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+
+                const idx = parseInt(pill.getAttribute('data-day'));
+                const menu = WEEKLY_MENU[idx];
+
+                activeCard.classList.remove('fade-in-scale');
+                void activeCard.offsetWidth; // trigger reflow
+                activeCard.classList.add('fade-in-scale');
+
+                dayTitleEl.textContent = menu.day;
+                morningEl.textContent = menu.morning;
+                noonEl.textContent = menu.noon;
+                nightEl.textContent = menu.night;
+            });
+        });
+
+        // Intersection Observer for Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

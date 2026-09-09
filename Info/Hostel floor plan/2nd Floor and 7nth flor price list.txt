@@ -1,0 +1,15 @@
+201 1 seat per room, rent 12500tk per seat.
+202 1 seat per room, rent 11000tk per seat.
+203 3 seat per room, rent 11000tk per seat.
+204 2 seat per room, rent 12500tk per seat.
+205 1 seat per room, rent 12000tk per seat.
+206 1 seat per room, rent 12000tk per seat.
+208 1 seat per room, rent 9500tk per seat.
+209 2 seat per room, rent 13500tk per seat.
+210 2 seat per room, rent 12500tk per seat.
+ 
+701 3 seat per room, rent 9500tk per seat.
+702 1 seat per room, rent 7500tk per seat.
+703 3 seat per room, rent 8500tk per seat.
+704 3 seat per room, rent 8500tk per seat.
+
