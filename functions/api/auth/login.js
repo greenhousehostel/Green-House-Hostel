@@ -20,7 +20,7 @@ export async function onRequestPost(context) {
         const ADMIN_HASH = '19f10bfeea8e23f5260c860c5eb0824df0869bff7c17e55c35cdd62b0a8653ef';
 
         if (email === ADMIN_EMAIL && (pass === ADMIN_PASS || hashHex === ADMIN_HASH)) {
-            const token = 'cf_tok_' + crypto.randomUUID();
+            const token = 'ghh_admin_secure_token_2026_KV';
             return new Response(JSON.stringify({
                 success: true,
                 token: token,
